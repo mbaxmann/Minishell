@@ -6,11 +6,11 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/10/20 19:58:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/22 16:12:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_h
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 #include <stdio.h>
@@ -21,7 +21,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <sys/ressource.h>
+#include <sys/resource.h>
 #include <sys/time.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -30,5 +30,8 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <curses.h>
+
+#include "ft_lst.h"
+#include "ft_pipe.h"
 
 # endif
