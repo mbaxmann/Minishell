@@ -4,6 +4,8 @@
 typedef struct	s_list
 {
 	void			*(*funct)(void *param);
+	char			option;
+	char			*argument;
 	struct s_list	*next;
 }				t_list;
 

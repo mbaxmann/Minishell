@@ -6,7 +6,7 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/10/22 16:37:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/25 17:37:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ void	*ft_do_parent(t_list *cmd, int pipefd[2])
 		}
 		stock = ft_strjoin(stock, buffer);
 		free(buffer);
-		cmd->funct(stock);
+		cmd->argument = stock;
+		cmd->funct(cmd);
 		return (stock);
 	}
 	else
 	{
-		cmd->funct(NULL);
+		cmd->funct(cmd);
 		return (NULL);
 	}
 }
@@ -47,7 +48,7 @@ void	ft_do_child(t_list *cmd, int pipefd[2])
 {
 	char	*stock;
 
-	stock = ft_pipe(cmd->next);
+	stock = (char *)ft_pipe(cmd->next);
 	if (stock)
 	{
 		write(pipefd[1], stock, ft_strlen(stock));

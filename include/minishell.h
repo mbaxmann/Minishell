@@ -6,7 +6,7 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/10/22 16:12:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/25 18:01:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@
 
 #include "ft_lst.h"
 #include "ft_pipe.h"
+#include "builtin.h"
+#include "../libft/libft.h"
 
 # endif
