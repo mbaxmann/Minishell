@@ -12,7 +12,7 @@ RM      =       rm -rf
 
 HEADER	=		include/minishell.h
 
-LINK	=	-lft
+LINK	=	-lft -lreadline
 
 LIB     =       libft/libft.a
 
