@@ -8,23 +8,22 @@ void	shift_fd(char *file)
 
 int make_cmd(char *cmd, t_list **all_cmds)
 {
-	int	depla;
 	char **separate;
 
-	check_redirect(*all_cmds, cmd + depla);
+	//check_redirect(*all_cmds, cmd + depla);
 	separate = ft_split(cmd, ' ');
 	if (!strncmp("echo", separate[0], 5))
-		ft_lst_push_front(all_cmds, ft_echo, separate);
-	else if (!strncmp("cd", separate[0] 3))
-		ft_lst_push_front(all_cmds, ft_cd, separate);
+		ft_lst_push_front(all_cmds, &ft_echo, separate);
+	else if (!strncmp("cd", separate[0], 3))
+		ft_lst_push_front(all_cmds, &ft_cd, separate);
 	else if (!strncmp("exit", separate[0], 6))
-		exit(0);
+		exit(ft_atoi(separate[1]));
 	else
 	{
 		ft_lst_push_front(all_cmds, NULL, separate);
-		ft_putstr_fd("minishell: ", 2, 0);
-		ft_putstr_fd((*all_cmds)->arg[0], 2, 0);
-		ft_putstr_fd(": command not found\n", 2, 0);
+		ft_putstr_fd("minishell: ", (*all_cmds)->fd2, 0);
+		ft_putstr_fd((*all_cmds)->arg[0], (*all_cmds)->fd2, 0);
+		ft_putstr_fd(": command not found\n", (*all_cmds)->fd2, 0);
 		return (1);
 	}
 	return (0);
@@ -63,7 +62,7 @@ int parse_cmds(char *str, t_list **all_cmds, int iter)
 	if (iter == 1 && i > 1)
 		ft_pipe(*all_cmds);
 	else if (iter == 1)
-		(*all_cmds)->funct(*all_cmds);
+		(*all_cmds)->funct((*all_cmds)->arg);
 	return (42);
 }
 

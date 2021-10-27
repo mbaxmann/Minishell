@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/10/27 19:24:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/27 21:00:58 by oscarlo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int		ft_pipe(t_list *cmd)
 		{
 			if (cmd_nbr > 1)
 				ft_set_pipe(pipefd, i, cmd_nbr);
-			execve(cmd->name, cmd->arg, NULL);
+			cmd->funct(cmd->arg);
+			//execve(cmd->name, cmd->arg, NULL);
 			return (0);
 		}
 		cmd = cmd->next;

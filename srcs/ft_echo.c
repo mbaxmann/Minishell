@@ -6,31 +6,30 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:46:42 by user42            #+#    #+#             */
-/*   Updated: 2021/10/27 20:53:49 by oscarlo          ###   ########.fr       */
+/*   Updated: 2021/10/27 21:11:31 by oscarlo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int ac, char **av)
+void	ft_echo(char **av)
 {
 	int		i;
 	char	new_line;
 
 	i = 1;
 	new_line = '\n';
-	if (ac > 1 && !ft_strncmp("-n", av[1], 3))
+	if (av[1] && !ft_strncmp("-n", av[1], 3))
 	{
 		new_line = '\0';
 		i++;
 	}
-	while (i < ac)
+	while (av[i])
 	{
-		if (i != 0)
+		if (i > (new_line == '\0') + 1)
 			write(1, " ", 1);
 		write(1, av[i], ft_strlen(av[i]));
 		i++;
 	}
 	write(1, &new_line, 1);
-	return (0);
 }
