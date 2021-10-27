@@ -3,51 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:35:00 by mbaxmann          #+#    #+#             */
-/*   Updated: 2021/09/13 18:15:58 by mbaxmann         ###   ########.fr       */
+/*   Updated: 2021/10/27 11:20:57 by oscarlo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isminus(char c, int *i)
+static int	is_numeric(char c)
 {
-	if (c == '-')
-	{
-		(*i)++;
-		return (-1);
-	}
-	else
-	{
-		(*i)++;
+	if (c >= '0' && c <= '9')
 		return (1);
-	}
+	else
+		return (0);
 }
 
-int	ft_atoi(const char *str)
+int			ft_atoi(const char *nptr)
 {
-	int			i;
-	int			minus;
-	long int	res;
+	int				number;
+	int				i;
+	int				sign;
 
 	i = 0;
-	minus = 1;
-	res = 0;
-	while (str[i])
+	if (!nptr)
+		return (0);
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	sign = 1;
+	if (nptr[i] == '-' || nptr[i] == '+')
 	{
-		while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-			i++;
-		if (str[i] == '-' || str[i] == '+')
-			minus = ft_isminus(str[i], &i);
-		while (str[i] >= '0' && str[i] <= '9' && res * 10 < 2147483648)
-			res = res * 10 + (str[i++] - '0');
-		if ((res > 2147483648 || str[i] >= '0' && str[i] <= '9') && minus == -1)
-			return (0);
-		if ((res > 2147483647 || str[i] >= '0') && str[i] <= '9' && minus == 1)
-			return (-1);
-		return (res * minus);
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
 	}
-	return (res * minus);
+	number = 0;
+	while (is_numeric(nptr[i]))
+	{
+		number = number * 10 + (nptr[i] - '0');
+		i++;
+	}
+	return (number * sign);
 }

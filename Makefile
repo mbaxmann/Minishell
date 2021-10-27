@@ -1,6 +1,6 @@
-OBJS    =       ${SRCS:.c=.o}
+SRCS	=		srcs/ft_cd.c srcs/ft_echo.c srcs/ft_lst.c srcs/ft_pipe.c srcs/minishell.c
 
-SRCS	=
+OBJS    =       ${SRCS:.c=.o}
 
 CC      =       clang
 

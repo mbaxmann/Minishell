@@ -24,6 +24,16 @@ t_list	*ft_lst_add(t_list *first, t_list *to_add)
 	return (first);
 }
 
+void	ft_lst_push_front(t_list **first, void *(*funct)(void *param), char **separate)
+{
+	t_list	*new;
+	
+	new = ft_lst_create(funct, separate);
+	if (*first)
+		new->next = *first;
+	*first = new;
+}
+
 void	ft_lst_free(t_list *first)
 {
 	t_list *tmp;
