@@ -1,12 +1,14 @@
-#include "../include/minishell"
+#include "../include/minishell.h"
 
-t_list	*ft_lst_create(void	*(*funct)(void *param))
+t_list	*ft_lst_create(char *name, char **arg)
 {
 	t_list *new;
 
 	new = (t_list *)malloc(sizeof(t_list));
-	new->funct = funct;
+	new->name = name;
+	new->arg = arg;
 	new->next = NULL;
+	return (new);
 }
 
 t_list	*ft_lst_add(t_list *first, t_list *to_add)
@@ -30,7 +32,21 @@ void	ft_lst_free(t_list *first)
 	{
 		tmp = first;
 		first = first->next;
-		free(tmp->funct);
+		free(tmp->arg);
+		free(tmp->name);
 		free(tmp);
 	}
+}
+
+int		ft_lst_len(t_list *first)
+{
+	int	i;
+
+	i = 0;
+	while (first)
+	{
+		first = first->next;
+		i++;
+	}
+	return (i);
 }

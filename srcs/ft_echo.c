@@ -6,19 +6,31 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:46:42 by user42            #+#    #+#             */
-/*   Updated: 2021/10/25 18:17:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/27 19:16:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	*ft_echo(void *param)
+int	main(int ac, char **av)
 {
-	char	*str;
+	int		i;
+	char	new_line;
 
-	str = ((t_list *)param)->argument;
-	ft_putstr_fd(str, 1, 0);
-	if (((t_list *)param)->option != 'n')
-		write(1, "\n", 1);
-	return (NULL);
+	i = 1;
+	new_line = '\n';
+	if (ac > 1 && !ft_strncmp("-n", av[1], 3))
+	{
+		new_line = '\0';
+		i++;
+	}
+	while (i < ac)
+	{
+		if (i != 0)
+			write(1, " ", 1);
+		write(1, av[i], ft_strlen(av[i]));
+		i++;
+	}
+	write(1, &new_line, 1);
+	return (0);
 }
