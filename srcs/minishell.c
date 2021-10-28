@@ -13,14 +13,14 @@ int make_cmd(char *cmd, t_list **all_cmds)
 	//check_redirect(*all_cmds, cmd + depla);
 	separate = ft_split(cmd, ' ');
 	if (!strncmp("echo", separate[0], 5))
-		ft_lst_push_front(all_cmds, &ft_echo, separate);
+		ft_lst_push(all_cmds, &ft_echo, separate);
 	else if (!strncmp("cd", separate[0], 3))
-		ft_lst_push_front(all_cmds, &ft_cd, separate);
+		ft_lst_push(all_cmds, &ft_cd, separate);
 	else if (!strncmp("exit", separate[0], 6))
 		exit(ft_atoi(separate[1]));
 	else
 	{
-		ft_lst_push_front(all_cmds, NULL, separate);
+		ft_lst_push(all_cmds, NULL, separate);
 		ft_putstr_fd("minishell: ", (*all_cmds)->fd2, 0);
 		ft_putstr_fd((*all_cmds)->arg[0], (*all_cmds)->fd2, 0);
 		ft_putstr_fd(": command not found\n", (*all_cmds)->fd2, 0);

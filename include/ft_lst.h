@@ -11,9 +11,8 @@ typedef struct	s_list
 }				t_list;
 
 t_list	*ft_lst_create(void (*funct)(char **param), char **arg);
-t_list	*ft_lst_add(t_list *first, t_list *to_add);
 void	ft_lst_free(t_list *first);
 int		ft_lst_len(t_list *first);
-void	ft_lst_push_front(t_list **first, void (*funct)(char **param), char **separate);
+void	ft_lst_push(t_list **first, void (*funct)(char **param), char **separate);
 
 # endif

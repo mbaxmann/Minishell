@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/10/27 21:00:58 by oscarlo          ###   ########.fr       */
+/*   Updated: 2021/10/28 19:20:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ int		ft_pipe(t_list *cmd)
 				ft_set_pipe(pipefd, i, cmd_nbr);
 			cmd->funct(cmd->arg);
 			//execve(cmd->name, cmd->arg, NULL);
-			return (0);
+			exit(0);
 		}
 		cmd = cmd->next;
 	}
 	i = -1;
 	while (++i < cmd_nbr)
-		waitpid(pid[i], NULL, 0);
+		waitpid(-1, NULL, 0);
 	ft_free_pipe(pipefd, pid, cmd_nbr);
 	return (0);
 }

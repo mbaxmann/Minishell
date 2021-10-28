@@ -13,27 +13,19 @@ t_list	*ft_lst_create(void (*funct)(char **param), char **arg)
 	return (new);
 }
 
-t_list	*ft_lst_add(t_list *first, t_list *to_add)
-{
-	t_list	*tmp;
-
-	if (!first)
-		return (to_add);
-	tmp = first;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = to_add;
-	return (first);
-}
-
-void	ft_lst_push_front(t_list **first, void (*funct)(char **param), char **separate)
+void	ft_lst_push(t_list **first, void (*funct)(char **param), char **separate)
 {
 	t_list	*new;
 	
 	new = ft_lst_create(funct, separate);
-	if (*first)
-		new->next = *first;
-	*first = new;
+	if (*first == NULL)
+		*first = new;
+	else
+	{
+		while ((*first)->next)
+			*first = (*first)->next;
+		(*first)->next = new;
+	}
 }
 
 void	ft_lst_free(t_list *first)
