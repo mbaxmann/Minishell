@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/10/28 19:20:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/03 18:06:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		ft_pipe(t_list *cmd)
 		pipefd[i] = (int *)malloc(sizeof(int) * 2);
 	pid = (pid_t *)malloc(sizeof(pid_t) * cmd_nbr);
 	i = -1;
-	while (++i < cmd_nbr)
+	while (++i < cmd_nbr - 1)
 		pipe(pipefd[i]);
 	i = -1;
 	while (++i < cmd_nbr)
