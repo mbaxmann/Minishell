@@ -6,17 +6,13 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/10/28 19:20:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/01 20:01:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Ft_pipe prend en parametre une liste chainée.
-  Chaque élément de la liste contient un pointeur sur fonction. (ici les fonction correspondent à des commande du minishell)
-  Ft_pipe retourn un pointeur vers le résultat obtenu.*/
-
 #include "../include/minishell.h"
 
-void	ft_close_pipe(int **pipefd, int nb, int j)
+static void	ft_close_pipe(int **pipefd, int nb, int j)
 {
 	int	i;
 
@@ -31,7 +27,7 @@ void	ft_close_pipe(int **pipefd, int nb, int j)
 	}
 }
 
-void	ft_set_pipe(int **pipefd, int i, int cmd_nbr)
+static void	ft_set_pipe(int **pipefd, int i, int cmd_nbr)
 {
 	ft_close_pipe(pipefd, cmd_nbr - 1, i - 1);
 	if (i != 0)
@@ -51,7 +47,7 @@ void	ft_set_pipe(int **pipefd, int i, int cmd_nbr)
 	}
 }
 
-void	ft_free_pipe(int **pipefd, pid_t *pid, int nb)
+static void	ft_free_pipe(int **pipefd, pid_t *pid, int nb)
 {
 	int	i;
 
@@ -62,7 +58,21 @@ void	ft_free_pipe(int **pipefd, pid_t *pid, int nb)
 	free(pipefd);
 }
 
-int		ft_pipe(t_list *cmd)
+static void	ft_prep(int ***pipefd, pid_t **pid, int cmd_nbr)
+{
+	int	i;
+
+	i = -1;
+	*pipefd = (int **)malloc(sizeof(int *) * (cmd_nbr - 1));
+	while (++i < cmd_nbr - 1)
+		(*pipefd)[i] = (int *)malloc(sizeof(int) * 2);
+	*pid = (pid_t *)malloc(sizeof(pid_t) * cmd_nbr);
+	i = -1;
+	while (++i < cmd_nbr)
+		pipe((*pipefd)[i]);
+}
+
+int	ft_pipe(t_list *cmd)
 {
 	pid_t	*pid;
 	int		**pipefd;
@@ -71,14 +81,7 @@ int		ft_pipe(t_list *cmd)
 
 	i = -1;
 	cmd_nbr = ft_lst_len(cmd);
-	pipefd = (int **)malloc(sizeof(int *) * (cmd_nbr - 1));
-	while (++i < cmd_nbr - 1)
-		pipefd[i] = (int *)malloc(sizeof(int) * 2);
-	pid = (pid_t *)malloc(sizeof(pid_t) * cmd_nbr);
-	i = -1;
-	while (++i < cmd_nbr)
-		pipe(pipefd[i]);
-	i = -1;
+	ft_prep(&pipefd, &pid, cmd_nbr);
 	while (++i < cmd_nbr)
 	{
 		pid[i] = fork();
@@ -87,7 +90,6 @@ int		ft_pipe(t_list *cmd)
 			if (cmd_nbr > 1)
 				ft_set_pipe(pipefd, i, cmd_nbr);
 			cmd->funct(cmd->arg);
-			//execve(cmd->name, cmd->arg, NULL);
 			exit(0);
 		}
 		cmd = cmd->next;
