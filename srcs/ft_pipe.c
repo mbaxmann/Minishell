@@ -6,7 +6,11 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/11/01 20:01:34 by user42           ###   ########.fr       */
+=======
+/*   Updated: 2021/11/03 18:06:56 by user42           ###   ########.fr       */
+>>>>>>> 2a03ca961369c301dc64ea96d300a9db5e25c7ac
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +85,18 @@ int	ft_pipe(t_list *cmd)
 
 	i = -1;
 	cmd_nbr = ft_lst_len(cmd);
+<<<<<<< HEAD
 	ft_prep(&pipefd, &pid, cmd_nbr);
+=======
+	pipefd = (int **)malloc(sizeof(int *) * (cmd_nbr - 1));
+	while (++i < cmd_nbr - 1)
+		pipefd[i] = (int *)malloc(sizeof(int) * 2);
+	pid = (pid_t *)malloc(sizeof(pid_t) * cmd_nbr);
+	i = -1;
+	while (++i < cmd_nbr - 1)
+		pipe(pipefd[i]);
+	i = -1;
+>>>>>>> 2a03ca961369c301dc64ea96d300a9db5e25c7ac
 	while (++i < cmd_nbr)
 	{
 		pid[i] = fork();

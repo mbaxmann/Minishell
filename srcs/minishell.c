@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
+/*   Updated: 2021/11/03 16:39:47 by oscarlo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	shift_fd(char *file)
@@ -6,11 +18,9 @@ void	shift_fd(char *file)
 	return ;
 }
 
-int make_cmd(char *cmd, t_list **all_cmds)
+int	make_cmd(char *cmd, t_list **all_cmds)
 {
-	char **separate;
-
-	//check_redirect(*all_cmds, cmd + depla);
+	char	**separate;
 	separate = ft_split(cmd, ' ');
 	if (!strncmp("echo", separate[0], 5))
 		ft_lst_push(all_cmds, &ft_echo, separate);
@@ -29,45 +39,46 @@ int make_cmd(char *cmd, t_list **all_cmds)
 	return (0);
 }
 
-int parse_cmds(char *str, t_list **all_cmds, int iter)
+int	parse_second(char *str, t_list **all_cmds)
 {
 	char	**separate;
 	int		i;
 
-	if (iter == 0)
+	separate = ft_split(str, '|');
+	i = 0;
+	while (separate[i])
 	{
-		separate = ft_split(str, ';');
-		i = 0;
-		while (separate[i] && iter < 1)
-		{
-			parse_cmds(separate[i], all_cmds, iter + 1);
-			free(separate[i]);
-			ft_lst_free(*all_cmds);
-			i++;
-		}
+		if (make_cmd(separate[i], all_cmds))
+			return (1);
+		free(separate[i]);
+		i++;
 	}
-	if (iter == 1)
-	{
-		separate = ft_split(str, '|');
-		i = 0;
-		while (separate[i])
-		{
-			if (make_cmd(separate[i], all_cmds))
-				return (1);
-			free(separate[i]);
-			i++;
-		}
-	}
-	free (separate);
-	if (iter == 1 && i > 1)
+	free(separate);
+	if (i > 1)
 		ft_pipe(*all_cmds);
-	else if (iter == 1)
-		(*all_cmds)->funct((*all_cmds)->arg);
+	(*all_cmds)->funct((*all_cmds)->arg);
 	return (42);
 }
 
+int	parse_first(char *str, t_list **all_cmds)
+{
+	char	**separate;
+	int		i;
 
-int	main()
+	separate = ft_split(str, ';');
+	i = 0;
+	while (separate[i])
+	{
+		parse_second(separate[i], all_cmds);
+		free(separate[i]);
+		ft_lst_free(*all_cmds);
+		i++;
+	}
+	free(separate);
+	return (42);
+}
+
+int	main(void)
 {
 	char	*str;
 	t_list	*all_cmds;
@@ -77,10 +88,9 @@ int	main()
 		all_cmds = NULL;
 		str = readline("==> ");
 		add_history(str);
-		//replace_dollars(str);
 		if (!str)
 			return (1);
-		if (!parse_cmds(str, &all_cmds, 0))
+		if (!parse_first(str, &all_cmds))
 		{
 			free(str);
 			return (1);
