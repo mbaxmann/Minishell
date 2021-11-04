@@ -67,7 +67,7 @@ static void	ft_prep(int ***pipefd, pid_t **pid, int cmd_nbr)
 		(*pipefd)[i] = (int *)malloc(sizeof(int) * 2);
 	*pid = (pid_t *)malloc(sizeof(pid_t) * cmd_nbr);
 	i = -1;
-	while (++i < cmd_nbr)
+	while (++i < cmd_nbr - 1)
 		pipe((*pipefd)[i]);
 }
 
