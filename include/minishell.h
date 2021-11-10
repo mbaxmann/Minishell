@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/09 16:09:19 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:03:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ extern int	errno;
 char	*ft_relpath(void);
 void	*ft_echo(char **av, char **envp);
 void	*ft_cd(char **av, char **envp);
+void	*ft_pwd(char **av, char **envp);
 int		ft_pipe(t_list *cmd, char **envp);
 
 # endif
