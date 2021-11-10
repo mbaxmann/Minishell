@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/10 15:56:48 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/10 16:00:19 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	make_cmd(char *cmd, t_list **all_cmds)
 		ft_lst_push(all_cmds, &ft_echo, separate);
 	else if (!strncmp("cd", separate[0], 3))
 		ft_lst_push(all_cmds, &ft_cd, separate);
+	else if (!strncmp("pwd", separate[0], 4))
+		ft_lst_push(all_cmds, &ft_pwd, separate);
 	else if (!strncmp("exit", separate[0], 6))
 		exit(ft_atoi(separate[1]));
 	else
@@ -66,10 +68,7 @@ int	parse_second(char *str, t_list **all_cmds, char **envp)
 		i++;
 	}
 	free(separate);
-	if (i > 1)
-		ft_pipe(*all_cmds, envp);
-	else
-		(*all_cmds)->funct((*all_cmds)->arg, envp);
+	ft_pipe(*all_cmds, envp);
 	return (42);
 }
 

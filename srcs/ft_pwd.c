@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envp.h                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 16:08:08 by user42            #+#    #+#             */
-/*   Updated: 2021/11/10 15:09:39 by user42           ###   ########.fr       */
+/*   Created: 2021/11/10 14:59:17 by user42            #+#    #+#             */
+/*   Updated: 2021/11/10 15:05:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ENVP_H
-# define FT_ENVP_H
+#include "../include/minishell.h"
 
-void	ft_check_env(char **envp, int *pipefd);
-void	ft_update_env(char **envp, int *pipefd, int cmd_nbr);
-char	**ft_envpdup(char **envp);
+void	*ft_pwd(char **av, char **envp)
+{
+	int	i;
 
-# endif
+	i = 0;
+	(void)av;
+	while (ft_strncmp(envp[i], "PWD=", 4))
+		i++;
+	write(STDOUT_FILENO, envp[i] + 4, ft_strlen(envp[i]) - 4);
+	write(STDOUT_FILENO, "\n", 1);
+	return (NULL);
+}

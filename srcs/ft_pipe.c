@@ -28,15 +28,18 @@ static void	ft_close_pipe(int **pipefd, int nb, int j)
 
 static void	ft_set_pipe(int **pipefd, int i, int cmd_nbr)
 {
-	ft_close_pipe(pipefd, cmd_nbr, i);
+	ft_close_pipe(pipefd, cmd_nbr - 1, i);
 	if (i != 0)
 	{
 		dup2(pipefd[i - 1][0], STDIN_FILENO);
 		close(pipefd[i - 1][0]);
-		dup2(pipefd[i][1], STDOUT_FILENO);
-		close(pipefd[i][1]);
+		if (i != cmd_nbr - 1)
+		{
+			dup2(pipefd[i][1], STDOUT_FILENO);
+			close(pipefd[i][1]);
+		}
 	}
-	else if (i == 0)
+	else if (i == 0 && cmd_nbr > 1)
 	{
 		dup2(pipefd[i][1], STDOUT_FILENO);
 		close(pipefd[i][1]);
@@ -85,9 +88,8 @@ int	ft_pipe(t_list *cmd, char **envp)
 		{
 			ft_set_pipe(pipefd, i, cmd_nbr);
 			cmd->funct(cmd->arg, envp);
-			ft_check_env(envp);
-			close(STDIN_FILENO);
-			close(STDOUT_FILENO);
+			if (i == cmd_nbr - 1)
+				ft_check_env(envp, pipefd[cmd_nbr - 1]);
 			exit(0);
 		}
 		cmd = cmd->next;
@@ -95,7 +97,7 @@ int	ft_pipe(t_list *cmd, char **envp)
 	i = -1;
 	while (++i < cmd_nbr)
 		waitpid(-1, NULL, 0);
-	ft_update_env(envp, pipefd[cmd_nbr - 1]);
+	ft_update_env(envp, pipefd[cmd_nbr - 1], cmd_nbr);
 	ft_free_pipe(pipefd, pid, cmd_nbr);
 	return (0);
 }
