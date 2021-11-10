@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/09 16:14:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/10 15:56:48 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	shift_fd(char *file)
 int	make_cmd(char *cmd, t_list **all_cmds)
 {
 	char	**separate;
+	int		return_value;
+
+	return_value = 0;
 	separate = ft_split(cmd, ' ');
 	if (!strncmp("echo", separate[0], 5))
 		ft_lst_push(all_cmds, &ft_echo, separate);
@@ -31,12 +34,21 @@ int	make_cmd(char *cmd, t_list **all_cmds)
 	else
 	{
 		ft_lst_push(all_cmds, NULL, separate);
+		return_value = 1;
+	}
+
+	if (check_redirections(*all_cmds) == -42)
+	{
+		
+	}
+
+	if (return_value)
+	{
 		ft_putstr_fd("minishell: ", (*all_cmds)->fd2, 0);
 		ft_putstr_fd((*all_cmds)->arg[0], (*all_cmds)->fd2, 0);
 		ft_putstr_fd(": command not found\n", (*all_cmds)->fd2, 0);
-		return (1);
 	}
-	return (0);
+	return (return_value);
 }
 
 int	parse_second(char *str, t_list **all_cmds, char **envp)
