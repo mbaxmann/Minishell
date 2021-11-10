@@ -1,8 +1,8 @@
-SRCS	=		srcs/ft_cd.c srcs/ft_echo.c srcs/ft_lst.c srcs/ft_pipe.c srcs/minishell.c
+SRCS	=		srcs/ft_cd.c srcs/ft_echo.c srcs/ft_lst.c srcs/ft_pipe.c srcs/minishell.c srcs/ft_envp.c
 
 OBJS    =       ${SRCS:.c=.o}
 
-CC      =       clang
+CC      =       clang -g
 
 FLAGS   =       -Wall -Wextra -Werror
 

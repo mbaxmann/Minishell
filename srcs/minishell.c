@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/03 16:39:47 by oscarlo          ###   ########.fr       */
+/*   Updated: 2021/11/09 16:14:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	make_cmd(char *cmd, t_list **all_cmds)
 	return (0);
 }
 
-int	parse_second(char *str, t_list **all_cmds)
+int	parse_second(char *str, t_list **all_cmds, char **envp)
 {
 	char	**separate;
 	int		i;
@@ -55,12 +55,13 @@ int	parse_second(char *str, t_list **all_cmds)
 	}
 	free(separate);
 	if (i > 1)
-		ft_pipe(*all_cmds);
-	(*all_cmds)->funct((*all_cmds)->arg);
+		ft_pipe(*all_cmds, envp);
+	else
+		(*all_cmds)->funct((*all_cmds)->arg, envp);
 	return (42);
 }
 
-int	parse_first(char *str, t_list **all_cmds)
+int	parse_first(char *str, t_list **all_cmds, char **envp)
 {
 	char	**separate;
 	int		i;
@@ -69,7 +70,7 @@ int	parse_first(char *str, t_list **all_cmds)
 	i = 0;
 	while (separate[i])
 	{
-		parse_second(separate[i], all_cmds);
+		parse_second(separate[i], all_cmds, envp);
 		free(separate[i]);
 		ft_lst_free(*all_cmds);
 		i++;
@@ -78,11 +79,15 @@ int	parse_first(char *str, t_list **all_cmds)
 	return (42);
 }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	char	*str;
+	char	**envp_cpy;
 	t_list	*all_cmds;
 
+	(void)ac;
+	(void)av;
+	envp_cpy = ft_envpdup(envp);
 	while (1)
 	{
 		all_cmds = NULL;
@@ -90,7 +95,7 @@ int	main(void)
 		add_history(str);
 		if (!str)
 			return (1);
-		if (!parse_first(str, &all_cmds))
+		if (!parse_first(str, &all_cmds, envp_cpy))
 		{
 			free(str);
 			return (1);
