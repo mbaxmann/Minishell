@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:46:42 by user42            #+#    #+#             */
-/*   Updated: 2021/11/08 14:31:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/10 18:14:14 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	*ft_echo(char **av, char **envp)
+void	*ft_echo(char **av, char **envp, int fd1)
 {
 	int		i;
 	char	new_line;
@@ -28,10 +28,10 @@ void	*ft_echo(char **av, char **envp)
 	while (av[i])
 	{
 		if (i > 1)
-			write(STDOUT_FILENO, " ", 1);
-		write(STDOUT_FILENO, av[i], ft_strlen(av[i]));
+			write(fd1, " ", 1);
+		write(fd1, av[i], ft_strlen(av[i]));
 		i++;
 	}
-	write(STDOUT_FILENO, &new_line, 1);
+	write(fd1, &new_line, 1);
 	return (NULL);
 }

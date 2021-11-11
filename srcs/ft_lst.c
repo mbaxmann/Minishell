@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-t_list	*ft_lst_create(void *(*funct)(char **av, char **envp), char **arg)
+t_list	*ft_lst_create(void *(*funct)(char **av, char **envp, int fd1), char **arg)
 {
 	t_list *new;
 
@@ -13,7 +13,7 @@ t_list	*ft_lst_create(void *(*funct)(char **av, char **envp), char **arg)
 	return (new);
 }
 
-void	ft_lst_push(t_list **first, void *(*funct)(char **av, char **envp),
+t_list	*ft_lst_push(t_list **first, void *(*funct)(char **av, char **envp, int fd1),
 		char **separate)
 {
 	t_list	*new;
@@ -27,6 +27,7 @@ void	ft_lst_push(t_list **first, void *(*funct)(char **av, char **envp),
 			*first = (*first)->next;
 		(*first)->next = new;
 	}
+	return (new);
 }
 
 void	ft_lst_free(t_list *first)

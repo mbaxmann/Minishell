@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
+/*   Updated: 2021/11/11 09:52:30 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +88,7 @@ int	ft_pipe(t_list *cmd, char **envp)
 		if (pid[i] == 0)
 		{
 			ft_set_pipe(pipefd, i, cmd_nbr);
-			cmd->funct(cmd->arg, envp);
+			cmd->funct(cmd->arg, envp, cmd->fd1);
 			if (i == cmd_nbr - 1)
 				ft_check_env(envp, pipefd[cmd_nbr - 1]);
 			exit(0);

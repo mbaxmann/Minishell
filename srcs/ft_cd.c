@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:47:08 by user42            #+#    #+#             */
-/*   Updated: 2021/11/08 16:50:05 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/10 18:16:14 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_relpath(void)
 	return (home);
 }
 
-void	*ft_cd(char **av, char **envp)
+void	*ft_cd(char **av, char **envp, int fd1)
 {
 	char *path;
 
@@ -39,7 +39,10 @@ void	*ft_cd(char **av, char **envp)
 	else
 		path = av[1];
 	if (chdir(path) == -1)
-		printf("cd: no such file or directory: %s\n", path);
+	{
+		ft_putstr_fd("cd: no such file or directory: ", fd1, 0);
+		ft_putendl_fd(path, fd1);
+	}
 	path = ft_relpath();
 	return (path);
 }
