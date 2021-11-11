@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/11 09:52:30 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/11 12:30:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	ft_free_pipe(int **pipefd, pid_t *pid, int nb)
 
 	i = -1;
 	free(pid);
-	while (++i < nb)
+	while (++i < nb - 1)
 		free(pipefd[i]);
 	free(pipefd);
 }
@@ -63,12 +63,12 @@ static void	ft_prep(int ***pipefd, pid_t **pid, int cmd_nbr)
 	int	i;
 
 	i = -1;
-	*pipefd = (int **)malloc(sizeof(int *) * (cmd_nbr));
-	while (++i < cmd_nbr)
+	*pipefd = (int **)malloc(sizeof(int *) * (cmd_nbr - 1));
+	while (++i < cmd_nbr - 1)
 		(*pipefd)[i] = (int *)malloc(sizeof(int) * 2);
 	*pid = (pid_t *)malloc(sizeof(pid_t) * cmd_nbr);
 	i = -1;
-	while (++i < cmd_nbr)
+	while (++i < cmd_nbr - 1)
 		pipe((*pipefd)[i]);
 }
 
@@ -89,8 +89,6 @@ int	ft_pipe(t_list *cmd, char **envp)
 		{
 			ft_set_pipe(pipefd, i, cmd_nbr);
 			cmd->funct(cmd->arg, envp, cmd->fd1);
-			if (i == cmd_nbr - 1)
-				ft_check_env(envp, pipefd[cmd_nbr - 1]);
 			exit(0);
 		}
 		cmd = cmd->next;
@@ -98,7 +96,6 @@ int	ft_pipe(t_list *cmd, char **envp)
 	i = -1;
 	while (++i < cmd_nbr)
 		waitpid(-1, NULL, 0);
-	ft_update_env(envp, pipefd[cmd_nbr - 1], cmd_nbr);
 	ft_free_pipe(pipefd, pid, cmd_nbr);
 	return (0);
 }

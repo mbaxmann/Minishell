@@ -7,8 +7,8 @@ t_list	*ft_lst_create(void *(*funct)(char **av, char **envp, int fd1), char **ar
 	new = (t_list *)malloc(sizeof(t_list));
 	new->funct = funct;
 	new->arg = arg;
-	new->fd1 = 0;
-	new->fd2 = 0;
+	new->fd1 = -1;
+	new->fd2 = -1;
 	new->next = NULL;
 	return (new);
 }
