@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/10 16:56:35 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/11 18:26:01 by oscarlo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ int	make_cmd(char *cmd, t_list **all_cmds)
 
 	return_value = 0;
 	separate = ft_split(cmd, ' ');
-	if (!strncmp("echo", separate[0], 5))
+	if (!ft_strncmp("echo", separate[0], 5))
 		index = ft_lst_push(all_cmds, &ft_echo, separate);
-	else if (!strncmp("cd", separate[0], 3))
+	else if (!ft_strncmp("cd", separate[0], 3))
 		index = ft_lst_push(all_cmds, &ft_cd, separate);
-	else if (!strncmp("pwd", separate[0], 4))
+	else if (!ft_strncmp("pwd", separate[0], 4))
 		index = ft_lst_push(all_cmds, &ft_pwd, separate);
-	else if (!strncmp("exit", separate[0], 6))
+	else if (!ft_strncmp("exit", separate[0], 6))
 		exit(ft_atoi(separate[1]));
 	else
 	{
@@ -40,10 +40,7 @@ int	make_cmd(char *cmd, t_list **all_cmds)
 		return_value = 1;
 	}
 	if (check_redirections(index) == -42)
-	{
-		ft_putendl_fd("ERROR in redirections", 2);
 		return (1);
-	}
 	if (return_value)
 	{
 		ft_putstr_fd("minishell: ", (*all_cmds)->fd2, 0);
