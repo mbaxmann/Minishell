@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:14:40 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/11 18:20:47 by oscarlo          ###   ########.fr       */
+/*   Updated: 2021/11/12 15:41:06 by oscarlo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_strjoin2(char const *s1, char const *s2)
 	return (result);
 }
 
-/*char	**erase_from_array(char **array, char *element)
+char	**erase_from_array(char **array, int element)
 {
 	int		aux;
 	int		i;
@@ -66,7 +66,7 @@ char	*ft_strjoin2(char const *s1, char const *s2)
 	aux = 0;
 	while (array[i])
 	{
-		if (ft_strncmp(array[i], element, ft_strlen(array[i])))
+		if (i != element)
 		{
 			new_one[aux] = ft_strdup(array[i]);
 			aux++;
@@ -77,7 +77,7 @@ char	*ft_strjoin2(char const *s1, char const *s2)
 	ft_putnbr_fd(aux, 2);
 	ft_putstr_fd(" and ", 2, 0);
 	ft_putnbr_fd(i, 2);
-	ft_putendl_fd(element, 2);
+	ft_putendl_fd(array[element], 2);
 	new_one[aux] = malloc(sizeof(char));
 	new_one[aux] = NULL;
 	i = 0;
@@ -88,4 +88,4 @@ char	*ft_strjoin2(char const *s1, char const *s2)
 	}
 	free (array);
 	return (new_one);
-}*/
+}
