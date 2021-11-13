@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/11 16:21:51 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/13 14:00:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ int		ft_cd(char **av, char **envp, int fd1);
 int		ft_pwd(char **av, char **envp, int fd1);
 int		ft_pipe(t_list *cmd, char **envp);
 int		check_redirections(t_list *new);
+char	**erase_from_array(char **array, int element);
+char	*ft_strjoin2(char const *s1, char const *s2);
 
 # endif
