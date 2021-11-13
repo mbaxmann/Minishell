@@ -6,13 +6,13 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:46:42 by user42            #+#    #+#             */
-/*   Updated: 2021/11/11 12:42:55 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/11 16:43:49 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	*ft_echo(char **av, char **envp, int fd1)
+int	ft_echo(char **av, char **envp, int fd1)
 {
 	int		i;
 	char	new_line;
@@ -35,5 +35,5 @@ void	*ft_echo(char **av, char **envp, int fd1)
 		i++;
 	}
 	write(fd1, &new_line, 1);
-	return (NULL);
+	return (0);
 }

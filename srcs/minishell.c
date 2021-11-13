@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/10 16:56:35 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/11 16:18:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	shift_fd(char *file)
 	return ;
 }
 
-int	make_cmd(char *cmd, t_list **all_cmds)
+int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 {
 	char	**separate;
 	int		return_value;
@@ -26,6 +26,7 @@ int	make_cmd(char *cmd, t_list **all_cmds)
 
 	return_value = 0;
 	separate = ft_split(cmd, ' ');
+	ft_getenv_var(separate, envp);
 	if (!strncmp("echo", separate[0], 5))
 		index = ft_lst_push(all_cmds, &ft_echo, separate);
 	else if (!strncmp("cd", separate[0], 3))
@@ -62,7 +63,7 @@ int	parse_second(char *str, t_list **all_cmds, char **envp)
 	i = 0;
 	while (separate[i])
 	{
-		if (make_cmd(separate[i], all_cmds))
+		if (make_cmd(separate[i], all_cmds, envp))
 			return (1);
 		free(separate[i]);
 		i++;

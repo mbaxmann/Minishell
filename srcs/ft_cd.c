@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:47:08 by user42            #+#    #+#             */
-/*   Updated: 2021/11/11 12:43:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/11 16:43:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_relpath(void)
 	return (home);
 }
 
-void	*ft_cd(char **av, char **envp, int fd1)
+int	ft_cd(char **av, char **envp, int fd1)
 {
 	char *path;
 
@@ -44,7 +44,7 @@ void	*ft_cd(char **av, char **envp, int fd1)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", fd1, 0);
 		ft_putendl_fd(path, fd1);
+		return (1);
 	}
-	path = ft_relpath();
-	return (path);
+	return (0);
 }
