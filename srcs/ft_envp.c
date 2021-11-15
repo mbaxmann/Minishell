@@ -6,53 +6,64 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/10 15:09:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/15 16:51:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_update_env(char **envp, int *pipefd, int cmd_nbr)
+char	*ft_getenv(char *env, char **envp)
 {
-	char	str[2];
-	char	*stock;
-	int		i;
+	int	i;
 
-	stock = NULL;
-	str[1] = '\0';
 	i = 0;
-	close(pipefd[1]);
-	while (read(pipefd[0], str, 1))
-		stock = ft_strjoin(stock, ft_strdup(str));
-	if (!stock)
-		return ;
-	while (ft_strncmp(envp[i], "PWD=", 4))
-		i++;
-	if (ft_strncmp(envp[i] + 4, stock, ft_strlen(envp[i]) + 1))
+	while (envp[i])
 	{
-		chdir(stock);
-		free(envp[i]);
-		envp[i] = ft_strjoin(ft_strdup("PWD="), ft_strdup(stock));
-		if (cmd_nbr > 1)
-			printf("(pwd now: %s)\n", ft_relpath());
+		if (!ft_strncmp(env, envp[i], ft_strlen(env)))
+			return (ft_strdup(envp[i] + ft_strlen(env) + 1));
+		i++;
 	}
-	free(stock);
+	return (NULL);
 }
 
-void	ft_check_env(char **envp, int *pipefd)
+void	ft_last_cmd(int wstatus, char **envp)
 {
-	int i;
-	char	*str;
+	int 	i;
+	char	*tmp;
 
 	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PWD=", 4))
-		i++;
-	str = getcwd(NULL, 0);
-	if (ft_strncmp(envp[i] + 4, str, ft_strlen(str) + 1))
+	tmp = NULL;
+	if (WIFEXITED(wstatus))
 	{
-		write(pipefd[1], str, ft_strlen(str));
-		write(pipefd[1], "\0", 1);
-		free(str);
+		printf("test le wstatus: %d\n", WEXITSTATUS(wstatus));
+		tmp = ft_itoa(WEXITSTATUS(wstatus), 'd');
+	}
+	else if (WIFSIGNALED(wstatus))
+	{
+		printf("stopped: %d\n", WTERMSIG(wstatus));
+	}
+	while (ft_strncmp(envp[i], "?=", 2))
+		i++;
+	free(envp[i]);
+	envp[i] = ft_strjoin(ft_strdup("?="), tmp);
+
+}
+
+void	ft_getenv_var(char **separate, char **envp)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (separate[i])
+	{
+		if (separate[i][0] == '$')
+		{
+			tmp = ft_getenv(separate[i] + 1, envp);
+			free(separate[i]);
+			separate[i] = tmp;
+		}
+		i++;
 	}
 }
 
@@ -64,13 +75,15 @@ char	**ft_envpdup(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	cp = (char **)malloc(sizeof(char *) * (i + 1));
+	cp = (char **)malloc(sizeof(char *) * (i + 2));
 	i = 0;
 	while (envp[i])
 	{
 		cp[i] = ft_strdup(envp[i]);
 		i++;
 	}
+	cp[i] = ft_strdup("?=0");
+	i++;
 	cp[i] = NULL;
 	return (cp);
 }

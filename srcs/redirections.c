@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:56:17 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/11 15:55:41 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/15 17:35:13 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ int	take_redirection(t_list *new, char *arg)
 	return (1);
 }
 
+int	redirect(char *str)
+{
+	if (!ft_strncmp(str, "<", 2) || !ft_strncmp(str, "<<", 3)
+		|| !ft_strncmp(str, ">", 2) || !ft_strncmp(str, ">>", 3))
+		return (1);
+	return (0);
+}
+
 int	check_redirections(t_list *new)
 {
 	int		i;
@@ -30,29 +38,20 @@ int	check_redirections(t_list *new)
 
 	i = 0;
 	while (++i && new->arg && new->arg[i])
-		if (new->arg[0] == '>' || new->arg[0] == '<')
+		if (new->arg[i][0] == '>' || new->arg[i][0] == '<')
 		{
-			if (!strncmp(*index, "<", 2) || !strncmp(*index, "<<", 3)
-				|| !strncmp(*index, ">", 2) || !strncmp(*index, ">>", 3))
+			if (redirect(new->arg[i]))
 			{
-				aux = ft_strjoin(*index, *(index+1));
-				ft_putnbr_fd(ft_strlen(aux), 2);
-				ft_putstr_fd(aux, 2, 0);
+				aux = ft_strjoin2(new->arg[i], new->arg[i + 1]);
 				if (!take_redirection(new, aux))
 					return (-42);
-				(*(index + 1))[0] = 0;
-				ft_putnbr_fd(ft_strlen(*(index+1)), 2);
-				ft_putendl_fd(*(index+1), 2);
+				new->arg = erase_from_array(new->arg, i + 1);
 				free(aux);
 			}
 			else
-				if (!take_redirection(new, *index))
+				if (!take_redirection(new, new->arg[i]))
 					return (-42);
-			ft_putnbr_fd(ft_strlen(new->arg), 2);
-			ft_putstr_fd(*index, 2, 0);
-			new->arg[0] = 0;
-			ft_putnbr_fd(ft_strlen(new->arg), 2);
-			ft_putendl_fd(*index, 2);
+			new->arg = erase_from_array(new->arg, i);
 			return (1);
 		}
 	return (0);
