@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:46:42 by user42            #+#    #+#             */
-/*   Updated: 2021/11/13 14:00:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/15 15:31:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	ft_echo(char **av, char **envp, int fd1)
 	}
 	while (av[i])
 	{
-		if (i > 1 && av[i][0])
+		if ((i > 2 && av[i][0]) ||
+			(new_line != '\0' && i == 2))
 			write(fd1, " ", 1);
 		write(fd1, av[i], ft_strlen(av[i]));
 		i++;

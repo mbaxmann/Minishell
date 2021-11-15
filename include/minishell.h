@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/13 14:00:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/15 15:45:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #include <termios.h>
 #include <curses.h>
 #include <errno.h>
+#include <term.h>
 
 #include "ft_lst.h"
 #include "ft_envp.h"
@@ -44,5 +45,6 @@ int		ft_pipe(t_list *cmd, char **envp);
 int		check_redirections(t_list *new);
 char	**erase_from_array(char **array, int element);
 char	*ft_strjoin2(char const *s1, char const *s2);
+void	ft_sig_manage(int mode);
 
 # endif

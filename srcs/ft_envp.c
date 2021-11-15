@@ -6,7 +6,7 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/11 16:38:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/15 16:51:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,22 @@ char	*ft_getenv(char *env, char **envp)
 	return (NULL);
 }
 
-void	ft_last_cmd(int *pipefd, char **envp)
+void	ft_last_cmd(int wstatus, char **envp)
 {
 	int 	i;
 	char	*tmp;
 
 	i = 0;
 	tmp = NULL;
-	close(pipefd[1]);
-	get_next_line(pipefd[0], &tmp);
-	close(pipefd[0]);
+	if (WIFEXITED(wstatus))
+	{
+		printf("test le wstatus: %d\n", WEXITSTATUS(wstatus));
+		tmp = ft_itoa(WEXITSTATUS(wstatus), 'd');
+	}
+	else if (WIFSIGNALED(wstatus))
+	{
+		printf("stopped: %d\n", WTERMSIG(wstatus));
+	}
 	while (ft_strncmp(envp[i], "?=", 2))
 		i++;
 	free(envp[i]);

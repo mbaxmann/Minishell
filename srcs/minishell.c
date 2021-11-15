@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/13 13:59:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/15 15:36:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 		index = ft_lst_push(all_cmds, &ft_pwd, separate);
 	else if (!ft_strncmp("exit", separate[0], 6))
 		exit(ft_atoi(separate[1]));
+	else if (!ft_strncmp("./", separate[0], 2))
+		index = ft_lst_push(all_cmds, NULL, separate);
 	else
 	{
 		index = ft_lst_push(all_cmds, NULL, separate);
@@ -90,20 +92,24 @@ int	parse_first(char *str, t_list **all_cmds, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
-	char	*str;
-	char	**envp_cpy;
-	t_list	*all_cmds;
+	char				*str;
+	char				**envp_cpy;
+	t_list				*all_cmds;
 
 	(void)ac;
 	(void)av;
 	envp_cpy = ft_envpdup(envp);
+	ft_sig_manage(1);
 	while (1)
 	{
 		all_cmds = NULL;
 		str = readline("==> ");
 		add_history(str);
 		if (!str)
+		{
+			write(STDOUT_FILENO, "exit\n", 5);
 			return (1);
+		}
 		if (!parse_first(str, &all_cmds, envp_cpy))
 		{
 			free(str);

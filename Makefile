@@ -1,4 +1,4 @@
-SRCS	=		srcs/ft_cd.c srcs/aux.c srcs/ft_echo.c srcs/ft_lst.c srcs/ft_pipe.c srcs/minishell.c srcs/ft_envp.c srcs/ft_pwd.c srcs/redirections.c
+SRCS	=		srcs/ft_cd.c srcs/aux.c srcs/ft_echo.c srcs/ft_lst.c srcs/ft_pipe.c srcs/minishell.c srcs/ft_envp.c srcs/ft_pwd.c srcs/redirections.c srcs/ft_sig_manage.c
 
 OBJS    =       ${SRCS:.c=.o}
 
@@ -12,7 +12,7 @@ RM      =       rm -rf
 
 HEADER	=		include/minishell.h
 
-LINK	=	-lft -lreadline
+LINK	=	-lft -lreadline -lncurses
 
 LIB     =       libft/libft.a
 
