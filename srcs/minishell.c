@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/16 19:28:12 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/16 22:01:01 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	return_value = 0;
 	separate = ft_special_split(cmd, ' ');
 	ft_getenv_var(separate, envp);
+	clean_quotes(separate);
 	if (!ft_strncmp("echo", separate[0], 5))
 		index = ft_lst_push(all_cmds, &ft_echo, separate);
 	else if (!ft_strncmp("cd", separate[0], 3))
