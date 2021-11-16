@@ -6,13 +6,13 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:46:42 by user42            #+#    #+#             */
-/*   Updated: 2021/11/15 15:31:17 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 20:34:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	ft_echo(char **av, char **envp, int fd1)
+int	ft_echo(char **av, char ***envp, int fd1)
 {
 	int		i;
 	char	new_line;

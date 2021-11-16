@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 15:28:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 20:54:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,29 @@ static void	ft_prep(int ***pipefd, pid_t **pid, int cmd_nbr)
 		pipe((*pipefd)[i]);
 }
 
-int	ft_pipe(t_list *cmd, char **envp)
+int ft_do_one(t_list *cmd, int **pipefd, char ***envp)
+{
+	pid_t pid;
+	int	i;
+
+	i = 0;
+	if (cmd->funct == NULL)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			ft_sig_manage(0);
+			ft_set_pipe(pipefd, 0, 1);
+			execve(cmd->arg[0], cmd->arg, *envp);
+		}
+		waitpid(-1, &i, WUNTRACED);
+	}
+	else
+		i = cmd->funct(cmd->arg, envp, cmd->fd1);
+	return (i);
+}
+
+int	ft_pipe(t_list *cmd, char ***envp)
 {
 	pid_t	*pid;
 	int		**pipefd;
@@ -84,7 +106,9 @@ int	ft_pipe(t_list *cmd, char **envp)
 	ret = 0;
 	cmd_nbr = ft_lst_len(cmd);
 	ft_prep(&pipefd, &pid, cmd_nbr);
-	while (++i < cmd_nbr)
+	if (cmd_nbr == 1)
+		ft_do_one(cmd, pipefd, envp);
+	while (++i < cmd_nbr && cmd_nbr > 1)
 	{
 		pid[i] = fork();
 		if (pid[i] == 0)
@@ -92,7 +116,7 @@ int	ft_pipe(t_list *cmd, char **envp)
 			ft_sig_manage(0);
 			ft_set_pipe(pipefd, i, cmd_nbr);
 			if (cmd->funct == NULL)
-				execve(cmd->arg[0], cmd->arg, envp);
+				execve(cmd->arg[0], cmd->arg, *envp);
 			else
 				i = cmd->funct(cmd->arg, envp, cmd->fd1);
 			exit(i);
@@ -100,9 +124,9 @@ int	ft_pipe(t_list *cmd, char **envp)
 		cmd = cmd->next;
 	}
 	i = -1;
-	while (++i < cmd_nbr)
+	while (++i < cmd_nbr && cmd_nbr > 1)
 		waitpid(-1, &ret, WUNTRACED);
-	ft_last_cmd(ret, envp);
+	ft_last_cmd(ret, *envp);
 	ft_free_pipe(pipefd, pid, cmd_nbr);
 	return (0);
 }

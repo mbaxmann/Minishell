@@ -6,11 +6,11 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:47:08 by user42            #+#    #+#             */
-/*   Updated: 2021/11/11 16:43:36 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 20:31:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 char	*ft_relpath(void)
 {
@@ -29,7 +29,7 @@ char	*ft_relpath(void)
 	return (home);
 }
 
-int	ft_cd(char **av, char **envp, int fd1)
+int	ft_cd(char **av, char ***envp, int fd1)
 {
 	char *path;
 
