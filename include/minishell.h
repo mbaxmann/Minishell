@@ -6,7 +6,7 @@
 /*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/15 15:45:13 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 14:15:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 #include "ft_lst.h"
 #include "ft_envp.h"
 #include "../libft/libft.h"
+
+extern int	errno;
 
 char	*ft_relpath(void);
 int		ft_echo(char **av, char **envp, int fd1);

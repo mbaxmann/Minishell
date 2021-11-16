@@ -1,8 +1,9 @@
 #include <stdio.h>
-int main (void)
+int main (int ac, char **av)
 {
-	printf("cest bon\n");
+	(void)ac;
+	printf("%s\n", av[0]);
 	while(1){
 	}
-	return (0);
+	return (420);
 }

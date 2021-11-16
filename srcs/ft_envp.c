@@ -6,7 +6,7 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/15 16:51:07 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 15:32:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,14 @@ void	ft_last_cmd(int wstatus, char **envp)
 
 	i = 0;
 	tmp = NULL;
-	if (WIFEXITED(wstatus))
+	if (WIFSIGNALED(wstatus))
 	{
-		printf("test le wstatus: %d\n", WEXITSTATUS(wstatus));
+		if (WCOREDUMP(wstatus))
+			printf("Quit (core dumped)\n");
+		tmp = ft_itoa(WTERMSIG(wstatus), 'd');
+	}
+	else if (WIFEXITED(wstatus))
 		tmp = ft_itoa(WEXITSTATUS(wstatus), 'd');
-	}
-	else if (WIFSIGNALED(wstatus))
-	{
-		printf("stopped: %d\n", WTERMSIG(wstatus));
-	}
 	while (ft_strncmp(envp[i], "?=", 2))
 		i++;
 	free(envp[i]);
@@ -52,17 +51,24 @@ void	ft_last_cmd(int wstatus, char **envp)
 void	ft_getenv_var(char **separate, char **envp)
 {
 	int		i;
+	int		j;
 	char	*tmp;
 
 	i = 0;
+	j = 0;
 	while (separate[i])
 	{
-		if (separate[i][0] == '$')
+		while (separate[i][j])
 		{
-			tmp = ft_getenv(separate[i] + 1, envp);
-			free(separate[i]);
-			separate[i] = tmp;
+			if (separate[i][j] == '$')
+			{
+				tmp = ft_getenv(separate[i] + 1 + j, envp);
+				separate[i][j] = '\0';
+				separate[i] = ft_strjoin(separate[i], tmp);
+			}
+			j++;
 		}
+		j = 0;
 		i++;
 	}
 }
