@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/15 20:49:50 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/16 16:20:25 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,16 @@ int	ft_pipe(t_list *cmd, char **envp)
 			ft_sig_manage(0);
 			ft_set_pipe(pipefd, i, cmd_nbr, cmd);
 			if (cmd->funct == NULL)
-				i = execve(cmd->arg[0], cmd->arg, envp);
+				execve(cmd->arg[0], cmd->arg, envp);
 			else
 				i = cmd->funct(cmd->arg, envp, cmd->fd1);
-			exit(42);
+			exit(i);
 		}
 		cmd = cmd->next;
 	}
 	i = -1;
 	while (++i < cmd_nbr)
-		waitpid(-1, &ret, 0);
+		waitpid(-1, &ret, WUNTRACED);
 	ft_last_cmd(ret, envp);
 	ft_free_pipe(pipefd, pid, cmd_nbr);
 	return (0);

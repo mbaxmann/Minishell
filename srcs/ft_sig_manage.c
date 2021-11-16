@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 16:25:09 by user42            #+#    #+#             */
-/*   Updated: 2021/11/15 18:02:45 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/16 16:20:35 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	ft_handler(int signum)
 		write(STDOUT_FILENO, "\n", 1);
 		if (rl_line_buffer[0] == '\0')
 		{
-			rl_replace_line("", 1);
 			rl_on_new_line();
+			rl_replace_line("", 1);
 			rl_redisplay();
 		}
 	}
@@ -32,6 +32,7 @@ void	ft_sig_manage(int mode)
 {
 	struct sigaction	sa;
 
+	sa.sa_flags = SA_RESTART;
 	if (mode == 1)
 		sa.sa_handler = ft_handler;
 	else
