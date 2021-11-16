@@ -6,24 +6,71 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 22:09:19 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 23:40:00 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_getenv(char *env, char **envp)
+char	*ft_getenv(char *env, int end, char **envp)
 {
 	int	i;
 
 	i = 0;
 	while (envp[i])
 	{
-		if (!ft_strncmp(env, envp[i], ft_strlen(env)))
-			return (ft_strdup(envp[i] + ft_strlen(env) + 1));
+		if (!ft_strncmp(env, envp[i], end))
+			return (ft_strdup(envp[i] + end + 1));
 		i++;
 	}
 	return (NULL);
+}
+
+char	*put_env(char *str, int j, char **envp)
+{
+	int		end;
+	char	*aux1;
+	char	*aux2;
+
+	end = j;
+	while (str[end] && str[end] != ' ' && str[end] != '\"')
+		end++;
+	if (str[end])
+		aux1 = ft_strdup(str + end);
+	else
+		aux1 = NULL;
+	aux2 = ft_getenv(str + 1 + j, end - j - 1, envp);
+	str[j] = '\0';
+	aux2 = ft_strjoin(str, aux2);
+	if (aux1)
+		aux2 = ft_strjoin(aux2, aux1);
+	return (aux2);
+}
+
+void	ft_getenv_var(char **separate, char **envp)
+{
+	int		i;
+	int		j;
+	int		single_quote;
+
+	i = 0;
+	single_quote = 0;
+	while (separate[i])
+	{
+		j = 0;
+		while (separate[i][j])
+		{
+			if (separate[i][j] == '$' && !single_quote)
+			{
+				separate[i] = put_env(separate[i], j, envp);
+				j--;
+			}
+			else if (separate[i][j] == '\'')
+				single_quote = 1 - single_quote;
+			j++;
+		}
+		i++;
+	}
 }
 
 void	ft_last_cmd(int wstatus, char **envp)
@@ -46,36 +93,6 @@ void	ft_last_cmd(int wstatus, char **envp)
 	free(envp[i]);
 	envp[i] = ft_strjoin(ft_strdup("?="), tmp);
 
-}
-
-void	ft_getenv_var(char **separate, char **envp)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-	int		single_quote;
-
-	i = 0;
-	j = 0;
-	single_quote = 0;
-	while (separate[i])
-	{
-		while (separate[i][j])
-		{
-			if (separate[i][j] == '$' && !single_quote)
-			{
-				tmp = ft_getenv(separate[i] + 1 + j, envp);
-				separate[i][j] = '\0';
-				separate[i] = ft_strjoin(separate[i], tmp);
-			}
-			else if (separate[i][j] == '\'')
-				single_quote = 1 - single_quote;
-			else
-				j++;
-		}
-		j = 0;
-		i++;
-	}
 }
 
 char	**ft_envpdup(char **envp)

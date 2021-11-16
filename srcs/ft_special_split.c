@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 23:16:27 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/16 19:39:05 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/16 22:00:26 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ char		*fill_it(char *s, int *i, char c)
 {
 	char	*new_one;
 	int		j;
-	int		k;
 	int		size;
 
 	size = size_word(s, *i, c);
@@ -97,17 +96,13 @@ char		*fill_it(char *s, int *i, char c)
 	if (!new_one)
 		return (NULL);
 	j = 0;
-	k = 0;
 	while (j < size)
 	{
-		if (s[*i + j]!= '\'' && s[*i + j] != '\"')
-		{
-			new_one[k] = s[*i + j];
-			k++;
-		}
+		//if (s[*i + j]!= '\'' && s[*i + j] != '\"')
+		new_one[j] = s[*i + j];
 		j++;
 	}
-	new_one[k] = '\0';
+	new_one[size] = '\0';
 	*i = *i + size;
 	return (new_one);
 }

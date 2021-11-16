@@ -6,12 +6,60 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:14:40 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/15 19:27:35 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/16 23:37:01 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+int		remove_quotes(char **str, int q)
+{
+	int		i;
+	char	*aux;
+
+	aux = (char*)malloc (sizeof (char) * (q + 1));
+	if (!aux)
+		return (ft_error(errno));
+	i = 0;
+	q = 0;
+	while ((*str)[i])
+	{
+		if ((*str)[i] != '\'' && (*str)[i] != '\"')
+		{
+			aux[q] = (*str)[i];
+			q++;
+		}
+		i++;
+	}
+	aux[q] = 0;
+	free(*str);
+	*str = aux;
+	return (q);
+}
+
+void	clean_quotes(char **list)
+{
+	int	i;
+	int	j;
+	int q;
+
+	i = 0;
+	while (list[i])
+	{
+		q = 0;
+		j = 0;
+		while (list[i][j])
+		{
+			if (list[i][j] != '\'' && list[i][j] != '\"')
+				q++;
+			j++;
+		}
+		if (q != j)
+			if (!remove_quotes(list + i, q))
+				return ;
+		i++;
+	}
+}
 
 int	ft_size2(char const *str)
 {

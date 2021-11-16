@@ -6,17 +6,11 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/16 22:28:52 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 00:08:16 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	shift_fd(char *file)
-{
-	(void) file;
-	return ;
-}
 
 int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 {
@@ -54,7 +48,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	if (return_value)
 	{
 		ft_putstr_fd("minishell: ", 2, 0);
-		ft_putstr_fd((*all_cmds)->arg[0], 2, 0);
+		ft_putstr_fd(separate[0], 2, 0);
 		ft_putstr_fd(": command not found\n", 2, 0);
 	}
 	return (return_value);
@@ -70,7 +64,7 @@ int	parse_second(char *str, t_list **all_cmds, char ***envp)
 	while (separate[i])
 	{
 		if (make_cmd(separate[i], all_cmds, *envp))
-			return (1);
+			return (0);
 		free(separate[i]);
 		i++;
 	}
@@ -88,13 +82,14 @@ int	parse_first(char *str, t_list **all_cmds, char ***envp)
 	i = 0;
 	while (separate[i])
 	{
-		parse_second(separate[i], all_cmds, envp);
+		if (!parse_second(separate[i], all_cmds, envp))
+			return(0);
 		free(separate[i]);
 		ft_lst_free(*all_cmds);
 		i++;
 	}
 	free(separate);
-	return (42);
+	return (0);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -107,22 +102,25 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	envp_cpy = ft_envpdup(envp);
 	ft_sig_manage(1);
-	while (1)
-	{
-		all_cmds = NULL;
-		str = readline("==> ");
-		add_history(str);
-		if (!str)
+	all_cmds = NULL;
+	if (ac >= 3 && !ft_strncmp(av[1], "-c", 3))
+  	{
+    	int exit_status = parse_first(av[2], &all_cmds, &envp_cpy);
+    	exit(exit_status);
+  	}
+	else
+		while (1)
 		{
-			write(STDOUT_FILENO, "exit\n", 5);
-			return (1);
-		}
-		if (!parse_first(str, &all_cmds, &envp_cpy))
-		{
+			all_cmds = NULL;
+			str = readline("==> ");
+			add_history(str);
+			if (!str)
+			{
+				write(STDOUT_FILENO, "exit\n", 5);
+				return (1);
+			}
+			parse_first(str, &all_cmds, &envp_cpy);
 			free(str);
-			return (1);
 		}
-		free(str);
-	}
 	return (0);
 }
