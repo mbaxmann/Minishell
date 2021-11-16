@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/15 17:35:54 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/15 19:16:48 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 		return (1);
 	if (return_value)
 	{
-		ft_putstr_fd("minishell: ", (*all_cmds)->fd2, 0);
-		ft_putstr_fd((*all_cmds)->arg[0], (*all_cmds)->fd2, 0);
-		ft_putstr_fd(": command not found\n", (*all_cmds)->fd2, 0);
+		ft_putstr_fd("minishell: ", 2, 0);
+		ft_putstr_fd((*all_cmds)->arg[0], 2, 0);
+		ft_putstr_fd(": command not found\n", 2, 0);
 	}
 	return (return_value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/15 15:45:13 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/15 19:19:19 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int		check_redirections(t_list *new);
 char	**erase_from_array(char **array, int element);
 char	*ft_strjoin2(char const *s1, char const *s2);
 void	ft_sig_manage(int mode);
+int		ft_error(int errno_value);
 
 # endif

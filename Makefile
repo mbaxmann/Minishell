@@ -4,7 +4,7 @@ OBJS    =       ${SRCS:.c=.o}
 
 CC      =       clang -g
 
-FLAGS   =       -Wall -Wextra -Werror
+FLAGS   =       -Wall -Wextra -Werror -I/usr/local/opt/readline/include
 
 NAME    =       minishell
 
@@ -12,7 +12,7 @@ RM      =       rm -rf
 
 HEADER	=		include/minishell.h
 
-LINK	=	-lft -lreadline -lncurses
+LINK	=	-lft -lreadline -lncurses -L/usr/local/opt/readline/lib
 
 LIB     =       libft/libft.a
 

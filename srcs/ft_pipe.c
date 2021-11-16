@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/15 16:59:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/15 20:49:50 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@ static void	ft_close_pipe(int **pipefd, int nb, int j)
 	}
 }
 
-static void	ft_set_pipe(int **pipefd, int i, int cmd_nbr)
+static void	ft_set_pipe(int **pipefd, int i, int cmd_nbr, t_list *cmd)
 {
 	ft_close_pipe(pipefd, cmd_nbr - 1, i);
+	if (cmd->fd1 != -1 && dup2(cmd->fd1, STDOUT_FILENO) < 0)
+		ft_error(errno);
+	if (cmd->fd2 != -1 && dup2(cmd->fd2, STDIN_FILENO) < 0)
+		ft_error(errno);
 	if (i != 0)
 	{
 		dup2(pipefd[i - 1][0], STDIN_FILENO);
@@ -90,7 +94,7 @@ int	ft_pipe(t_list *cmd, char **envp)
 		if (pid[i] == 0)
 		{
 			ft_sig_manage(0);
-			ft_set_pipe(pipefd, i, cmd_nbr);
+			ft_set_pipe(pipefd, i, cmd_nbr, cmd);
 			if (cmd->funct == NULL)
 				i = execve(cmd->arg[0], cmd->arg, envp);
 			else
