@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/16 22:01:01 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/16 22:28:52 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 		index = ft_lst_push(all_cmds, &ft_pwd, separate);
 	else if (!ft_strncmp("exit", separate[0], 6))
 		exit(ft_atoi(separate[1]));
+	else if (!ft_strncmp("env", separate[0], 4))
+		index = ft_lst_push(all_cmds, &ft_env, separate);
+	else if (!ft_strncmp("export", separate[0], 7))
+		index = ft_lst_push(all_cmds, &ft_export, separate);
+	else if (!ft_strncmp("unset", separate[0], 6))
+		index = ft_lst_push(all_cmds, &ft_unset, separate);
 	else if (!ft_strncmp("./", separate[0], 2))
 		index = ft_lst_push(all_cmds, NULL, separate);
 	else
@@ -54,7 +60,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	return (return_value);
 }
 
-int	parse_second(char *str, t_list **all_cmds, char **envp)
+int	parse_second(char *str, t_list **all_cmds, char ***envp)
 {
 	char	**separate;
 	int		i;
@@ -63,7 +69,7 @@ int	parse_second(char *str, t_list **all_cmds, char **envp)
 	i = 0;
 	while (separate[i])
 	{
-		if (make_cmd(separate[i], all_cmds, envp))
+		if (make_cmd(separate[i], all_cmds, *envp))
 			return (1);
 		free(separate[i]);
 		i++;
@@ -73,7 +79,7 @@ int	parse_second(char *str, t_list **all_cmds, char **envp)
 	return (42);
 }
 
-int	parse_first(char *str, t_list **all_cmds, char **envp)
+int	parse_first(char *str, t_list **all_cmds, char ***envp)
 {
 	char	**separate;
 	int		i;
@@ -111,7 +117,7 @@ int	main(int ac, char **av, char **envp)
 			write(STDOUT_FILENO, "exit\n", 5);
 			return (1);
 		}
-		if (!parse_first(str, &all_cmds, envp_cpy))
+		if (!parse_first(str, &all_cmds, &envp_cpy))
 		{
 			free(str);
 			return (1);

@@ -1,4 +1,18 @@
-SRCS	=		srcs/ft_special_split.c srcs/ft_cd.c srcs/aux.c srcs/ft_echo.c srcs/ft_lst.c srcs/ft_pipe.c srcs/minishell.c srcs/ft_envp.c srcs/ft_pwd.c srcs/redirections.c srcs/ft_sig_manage.c
+SRCS	=		srcs/builtin/ft_cd.c \
+				srcs/builtin/ft_pwd.c \
+				srcs/builtin/ft_echo.c \
+				srcs/builtin/ft_env.c \
+				srcs/builtin/ft_export.c \
+				srcs/builtin/ft_export2.c \
+				srcs/builtin/ft_unset.c \
+				srcs/aux.c \
+				srcs/ft_lst.c \
+				srcs/ft_pipe.c \
+				srcs/minishell.c \
+				srcs/ft_envp.c \
+				srcs/redirections.c \
+				srcs/ft_sig_manage.c \
+				srcs/ft_special_split.c \
 
 OBJS    =       ${SRCS:.c=.o}
 
