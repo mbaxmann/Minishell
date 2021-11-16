@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_envp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 15:32:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 19:44:44 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,25 @@ void	ft_getenv_var(char **separate, char **envp)
 	int		i;
 	int		j;
 	char	*tmp;
+	int		single_quote;
 
 	i = 0;
 	j = 0;
+	single_quote = 0;
 	while (separate[i])
 	{
 		while (separate[i][j])
 		{
-			if (separate[i][j] == '$')
+			if (separate[i][j] == '$' && !single_quote)
 			{
 				tmp = ft_getenv(separate[i] + 1 + j, envp);
 				separate[i][j] = '\0';
 				separate[i] = ft_strjoin(separate[i], tmp);
 			}
-			j++;
+			else if (separate[i][j] == '\'')
+				single_quote = 1 - single_quote;
+			else
+				j++;
 		}
 		j = 0;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/16 16:20:44 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/16 19:28:12 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	t_list	*index;
 
 	return_value = 0;
-	separate = ft_split(cmd, ' ');
+	separate = ft_special_split(cmd, ' ');
 	ft_getenv_var(separate, envp);
 	if (!ft_strncmp("echo", separate[0], 5))
 		index = ft_lst_push(all_cmds, &ft_echo, separate);
@@ -58,7 +58,7 @@ int	parse_second(char *str, t_list **all_cmds, char **envp)
 	char	**separate;
 	int		i;
 
-	separate = ft_split(str, '|');
+	separate = ft_special_split(str, '|');
 	i = 0;
 	while (separate[i])
 	{
@@ -77,7 +77,7 @@ int	parse_first(char *str, t_list **all_cmds, char **envp)
 	char	**separate;
 	int		i;
 
-	separate = ft_split(str, ';');
+	separate = ft_special_split(str, ';');
 	i = 0;
 	while (separate[i])
 	{

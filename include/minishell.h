@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 16:20:26 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/16 19:28:02 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ char	**erase_from_array(char **array, int element);
 char	*ft_strjoin2(char const *s1, char const *s2);
 void	ft_sig_manage(int mode);
 int		ft_error(int errno_value);
+char	**ft_special_split(char *s, char c);
 
 # endif
