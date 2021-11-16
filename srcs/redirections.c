@@ -3,23 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:56:17 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/12 15:59:05 by oscarlo          ###   ########.fr       */
+/*   Updated: 2021/11/15 21:49:55 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+int	ft_error(int errno_value)
+{
+	ft_putendl_fd(strerror(errno_value), 2);
+	return (0);
+}
+
 int	take_redirection(t_list *new, char *arg)
 {
-	if (arg[0] == '>' && arg[1] == '>')
-		new->fd1 = open(arg + 2, O_WRONLY | O_CREAT | O_APPEND, 0664);
-	else if (arg[0] == '>')
-		new->fd1 = open(arg + 1, O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (new->fd1 == -1)
-		return (0);
+	if (arg[0] == '>')
+	{
+		if (arg[1] == '>') /// THIS NEEDS TO BE IMPLEMENTED STILL
+			new->fd1 = open(arg + 2, O_CREAT | O_RDWR | O_APPEND, 0600);
+		else
+			new->fd1 = open(arg + 1, O_CREAT | O_RDWR | O_TRUNC, 0600);
+		if (new->fd1 == -1)
+			return (ft_error(errno));
+	}
+	else if (arg[0] == '<')
+	{
+		if (arg[1] == '<')
+			new->fd2 = open(arg + 2, O_RDWR, 0600);
+		else
+			new->fd2 = open(arg + 1, O_RDWR, 0600);
+		if (new->fd2 == -1)
+			return (ft_error(errno));
+	}
 	return (1);
 }
 

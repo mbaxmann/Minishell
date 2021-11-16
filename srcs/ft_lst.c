@@ -32,13 +32,21 @@ t_list	*ft_lst_push(t_list **first, int (*funct)(char **av, char ***envp, int fd
 
 void	ft_lst_free(t_list *first)
 {
-	t_list *tmp;
+	t_list	*tmp;
+	int		i;
 
 	while (first)
 	{
 		tmp = first;
 		first = first->next;
-		free(tmp->arg);
+		i = 0;
+		/*while (tmp->arg[i])
+		{
+			free(tmp->arg[i]);
+			i++;
+		}*/
+		if (tmp->arg)
+			free(tmp->arg);
 		free(tmp);
 	}
 }

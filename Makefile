@@ -12,12 +12,13 @@ SRCS	=		srcs/builtin/ft_cd.c \
 				srcs/ft_envp.c \
 				srcs/redirections.c \
 				srcs/ft_sig_manage.c \
+				srcs/ft_special_split.c \
 
 OBJS    =       ${SRCS:.c=.o}
 
 CC      =       clang -g
 
-FLAGS   =       -Wall -Wextra -Werror
+FLAGS   =       -Wall -Wextra -Werror -I/usr/local/opt/readline/include
 
 NAME    =       minishell
 
@@ -25,7 +26,7 @@ RM      =       rm -rf
 
 HEADER	=		include/minishell.h
 
-LINK	=	-lft -lreadline -lncurses
+LINK	=	-lft -lreadline -lncurses -L/usr/local/opt/readline/lib
 
 LIB     =       libft/libft.a
 

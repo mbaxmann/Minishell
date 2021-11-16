@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/16 21:46:49 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 22:08:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	t_list	*index;
 
 	return_value = 0;
-	separate = ft_split(cmd, ' ');
+	separate = ft_special_split(cmd, ' ');
 	ft_getenv_var(separate, envp);
 	if (!ft_strncmp("echo", separate[0], 5))
 		index = ft_lst_push(all_cmds, &ft_echo, separate);
@@ -52,9 +52,9 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 		return (1);
 	if (return_value)
 	{
-		ft_putstr_fd("minishell: ", (*all_cmds)->fd2, 0);
-		ft_putstr_fd((*all_cmds)->arg[0], (*all_cmds)->fd2, 0);
-		ft_putstr_fd(": command not found\n", (*all_cmds)->fd2, 0);
+		ft_putstr_fd("minishell: ", 2, 0);
+		ft_putstr_fd((*all_cmds)->arg[0], 2, 0);
+		ft_putstr_fd(": command not found\n", 2, 0);
 	}
 	return (return_value);
 }
@@ -64,7 +64,7 @@ int	parse_second(char *str, t_list **all_cmds, char ***envp)
 	char	**separate;
 	int		i;
 
-	separate = ft_split(str, '|');
+	separate = ft_special_split(str, '|');
 	i = 0;
 	while (separate[i])
 	{
@@ -83,7 +83,7 @@ int	parse_first(char *str, t_list **all_cmds, char ***envp)
 	char	**separate;
 	int		i;
 
-	separate = ft_split(str, ';');
+	separate = ft_special_split(str, ';');
 	i = 0;
 	while (separate[i])
 	{

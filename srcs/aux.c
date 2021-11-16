@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aux.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:14:40 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/12 15:41:06 by oscarlo          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:27:35 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,6 @@ char	**erase_from_array(char **array, int element)
 		}
 		i++;
 	}
-	ft_putstr_fd("Sizes ", 2, 0);
-	ft_putnbr_fd(aux, 2);
-	ft_putstr_fd(" and ", 2, 0);
-	ft_putnbr_fd(i, 2);
-	ft_putendl_fd(array[element], 2);
 	new_one[aux] = malloc(sizeof(char));
 	new_one[aux] = NULL;
 	i = 0;

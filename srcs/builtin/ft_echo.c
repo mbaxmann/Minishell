@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oscarlo <oscarlo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:46:42 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 20:34:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/16 22:11:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	ft_echo(char **av, char ***envp, int fd1)
 		if ((i > 2 && av[i][0]) ||
 			(new_line != '\0' && i == 2))
 			write(fd1, " ", 1);
-		write(fd1, av[i], ft_strlen(av[i]));
+		if (ft_strlen(av[i]))
+			write(fd1, av[i], ft_strlen(av[i]));
 		i++;
 	}
 	write(fd1, &new_line, 1);
