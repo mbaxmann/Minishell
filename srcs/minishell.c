@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/17 00:08:16 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:34:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	else if (!ft_strncmp("pwd", separate[0], 4))
 		index = ft_lst_push(all_cmds, &ft_pwd, separate);
 	else if (!ft_strncmp("exit", separate[0], 6))
-		exit(ft_atoi(separate[1]));
+		index = ft_lst_push(all_cmds, &ft_exit, separate);
 	else if (!ft_strncmp("env", separate[0], 4))
 		index = ft_lst_push(all_cmds, &ft_env, separate);
 	else if (!ft_strncmp("export", separate[0], 7))
@@ -37,6 +37,8 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	else if (!ft_strncmp("unset", separate[0], 6))
 		index = ft_lst_push(all_cmds, &ft_unset, separate);
 	else if (!ft_strncmp("./", separate[0], 2))
+		index = ft_lst_push(all_cmds, NULL, separate);
+	else if(!ft_strncmp("/", separate[0], 0))
 		index = ft_lst_push(all_cmds, NULL, separate);
 	else
 	{

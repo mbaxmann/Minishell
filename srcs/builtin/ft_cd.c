@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:47:08 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 22:11:54 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/17 14:18:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,37 @@ char	*ft_relpath(void)
 	return (home);
 }
 
+static char	*ft_get_home(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], "HOME=", 5))
+			return (envp[i] + 5);
+		i++;
+	}
+	return (NULL);
+}
+
+static void	ft_update_pwd(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], "PWD=", 4))
+		{
+			free(envp[i]);
+			envp[i] = ft_strjoin(ft_strdup("PWD="), getcwd(NULL, 0));
+			return ;
+		}
+		i++;
+	}
+}
+
 int	ft_cd(char **av, char ***envp, int fd1)
 {
 	char *path;
@@ -36,7 +67,7 @@ int	ft_cd(char **av, char ***envp, int fd1)
 	(void)envp;
 	(void)fd1;
 	if (!av[1])
-		path = ".";
+		path = ft_get_home(*envp);
 	else
 		path = av[1];
 	if (chdir(path) == -1)
@@ -45,5 +76,7 @@ int	ft_cd(char **av, char ***envp, int fd1)
 		ft_putendl_fd(path, STDOUT_FILENO);
 		return (1);
 	}
+	else
+		ft_update_pwd(*envp);
 	return (0);
 }

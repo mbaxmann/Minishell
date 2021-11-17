@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 22:29:24 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:01:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	**erase_from_array(char **array, int element);
 char	*ft_strjoin2(char const *s1, char const *s2);
 void	ft_sig_manage(int mode);
 int		ft_error(int errno_value);
+int		ft_exec(t_list *cmd, char **envp);
 char	**ft_special_split(char *s, char c);
 void	clean_quotes(char **list);
 

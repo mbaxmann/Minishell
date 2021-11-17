@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 23:36:24 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:00:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ int ft_do_one(t_list *cmd, int **pipefd, char ***envp)
 		{
 			ft_sig_manage(0);
 			ft_set_pipe(pipefd, 0, 1, cmd);
-			execve(cmd->arg[0], cmd->arg, *envp);
+			i = ft_exec(cmd, *envp);
+			if (i == -1)
+				printf("minishell: %s: No such file or directori\n",  cmd->arg[0]);
+			exit(1);
 		}
 		waitpid(-1, &i, WUNTRACED);
 	}
@@ -111,7 +114,7 @@ int	ft_pipe(t_list *cmd, char ***envp)
 	cmd_nbr = ft_lst_len(cmd);
 	ft_prep(&pipefd, &pid, cmd_nbr);
 	if (cmd_nbr == 1)
-		ft_do_one(cmd, pipefd, envp);
+		ret = ft_do_one(cmd, pipefd, envp);
 	while (++i < cmd_nbr && cmd_nbr > 1)
 	{
 		pid[i] = fork();
@@ -120,7 +123,7 @@ int	ft_pipe(t_list *cmd, char ***envp)
 			ft_sig_manage(0);
 			ft_set_pipe(pipefd, i, cmd_nbr, cmd);
 			if (cmd->funct == NULL)
-				execve(cmd->arg[0], cmd->arg, *envp);
+				ft_exec(cmd, *envp);
 			else
 				i = cmd->funct(cmd->arg, envp, cmd->fd1);
 			exit(i);

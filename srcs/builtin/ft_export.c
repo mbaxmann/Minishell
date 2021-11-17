@@ -6,7 +6,7 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:15:10 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 22:02:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/17 14:49:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,30 @@ static int	ft_valid(char *str)
 	return (1);
 }
 
+static int	ft_replace(char **envp, char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[j] && str[j] != '=')
+		j++;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], str, j))
+		{
+			if (str[j] == '\0')
+				return (1);
+			free(envp[i]);
+			envp[i] = ft_strdup(str);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	ft_export(char **av, char ***envp, int fd1)
 {
 	int	i;
@@ -69,7 +93,8 @@ int	ft_export(char **av, char ***envp, int fd1)
 				ft_putstr_fd("» : invalid identifier\n", fd1, 0);
 				return (1);
 			}
-			ft_add(envp, av[i]);
+			if (!ft_replace(*envp, av[i]))
+				ft_add(envp, av[i]);
 			i++;
 		}
 	}

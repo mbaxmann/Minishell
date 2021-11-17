@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:46:42 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 00:02:36 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:24:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ int	ft_echo(char **av, char ***envp, int fd1)
 	new_line = '\n';
 	(void)envp;
 	if (av[1] && !ft_strncmp("-n", av[1], 3))
+	{
 		new_line = '\0';
+		i++;
+	}
 	written = 0;
 	while (av[i])
 	{
-		if (ft_strncmp("-n", av[i], 2))
+		if (written)
+			write(fd1, " ", 1);
+		if (ft_strlen(av[i]))
 		{
-			if (written)
-				write(fd1, " ", 1);
-			if (ft_strlen(av[i]))
-			{
-				write(fd1, av[i], ft_strlen(av[i]));
-				written++;
-			}
+			write(fd1, av[i], ft_strlen(av[i]));
+			written++;
 		}
 		i++;
 	}

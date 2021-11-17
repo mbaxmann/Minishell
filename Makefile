@@ -5,6 +5,7 @@ SRCS	=		srcs/builtin/ft_cd.c \
 				srcs/builtin/ft_export.c \
 				srcs/builtin/ft_export2.c \
 				srcs/builtin/ft_unset.c \
+				srcs/builtin/ft_exit.c \
 				srcs/aux.c \
 				srcs/ft_lst.c \
 				srcs/ft_pipe.c \
@@ -13,6 +14,7 @@ SRCS	=		srcs/builtin/ft_cd.c \
 				srcs/redirections.c \
 				srcs/ft_sig_manage.c \
 				srcs/ft_special_split.c \
+				srcs/ft_exec.c \
 
 OBJS    =       ${SRCS:.c=.o}
 

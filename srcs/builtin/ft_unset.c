@@ -6,7 +6,7 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:56:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 22:02:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:25:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,31 @@ static int	ft_not_exist(char **envp, char *str)
 static void	ft_delete(char ***envp, char *str)
 {
 	int		i;
+	int		k;
 	int		len;
 	char	**envp_cp;
 	char	**tmp;
 
 	i = 0;
+	k = 0;
 	tmp = *envp;
 	if (ft_not_exist(*envp, str))
 		return ;
 	while (tmp[i])
 		i++;
 	len = i;
-	envp_cp = (char **)malloc(sizeof(char *) * (i - 1));
+	envp_cp = (char **)malloc(sizeof(char *) * i);
 	i = 0;
-	while (i < len - 1)
+	while (i < len)
 	{
-		envp_cp[i] = tmp[i];
+		if (!ft_strncmp(tmp[i], str, ft_strlen(str)))
+		{
+			free(tmp[i]);
+			k++;
+			i--;
+		}
+		else
+			envp_cp[i] = tmp[i + k];
 		i++;
 	}
 	envp_cp[i] = NULL;
