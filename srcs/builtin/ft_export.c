@@ -6,7 +6,7 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:15:10 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 14:49:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/17 19:28:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ft_add(char ***envp, char *str)
 	tmp = *envp;
 	while (tmp[i])
 		i++;
-	envp_cp = (char **)malloc(sizeof(char *) * (i + 1));
+	envp_cp = (char **)malloc(sizeof(char *) * (i + 2));
 	i = 0;
 	while (tmp[i])
 	{
