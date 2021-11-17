@@ -6,56 +6,67 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:14:40 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/16 23:37:01 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:46:11 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		remove_quotes(char **str, int q)
+int		remove_quotes(char **str, int size, int s_q, int d_q)
 {
 	int		i;
 	char	*aux;
 
-	aux = (char*)malloc (sizeof (char) * (q + 1));
+	aux = (char*)malloc (sizeof (char) * (size + 1));
 	if (!aux)
 		return (ft_error(errno));
 	i = 0;
-	q = 0;
+	size = 0;
 	while ((*str)[i])
 	{
-		if ((*str)[i] != '\'' && (*str)[i] != '\"')
+		if (((*str)[i] != '\'' && (*str)[i] != '\"') ||
+			(((*str)[i] == '\'' && d_q) || ((*str)[i] == '\"' && s_q)))
+			aux[size++] = (*str)[i];
+		else
 		{
-			aux[q] = (*str)[i];
-			q++;
+			d_q = (d_q + (*str)[i] == '\"') % 2;
+			s_q = (s_q + (*str)[i] == '\'') % 2;
 		}
 		i++;
 	}
-	aux[q] = 0;
+	aux[size] = 0;
 	free(*str);
 	*str = aux;
-	return (q);
+	return (size);
 }
 
-void	clean_quotes(char **list)
+void	clean_quotes(char **list, int d_q, int s_q)
 {
 	int	i;
 	int	j;
 	int q;
+	int	previous;
 
 	i = 0;
+	previous = 0;
 	while (list[i])
 	{
 		q = 0;
 		j = 0;
 		while (list[i][j])
 		{
-			if (list[i][j] != '\'' && list[i][j] != '\"')
+			if ((list[i][j] != '\'' && list[i][j] != '\"') ||
+			((list[i][j] == '\'' && d_q) || (list[i][j] == '\"' && s_q)))
 				q++;
+			else
+			{
+				d_q = (d_q + list[i][j] == '\"') % 2;
+				s_q = (s_q + list[i][j] == '\"') % 2;
+			}
 			j++;
 		}
 		if (q != j)
-			if (!remove_quotes(list + i, q))
+			if (!remove_quotes(list + i, q, 0, 0))
 				return ;
 		i++;
 	}
