@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 22:29:24 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:37:15 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ char	*ft_strjoin2(char const *s1, char const *s2);
 void	ft_sig_manage(int mode);
 int		ft_error(int errno_value);
 char	**ft_special_split(char *s, char c);
-void	clean_quotes(char **list);
+void	clean_quotes(char **list, int d_q, int s_q);
 
 # endif

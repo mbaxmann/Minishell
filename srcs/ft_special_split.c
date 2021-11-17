@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 23:16:27 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/16 22:00:26 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:29:49 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,10 @@ static char	**first_alloc(char *s, char c)
 	words = count_words((char*)s, c);
 	if (words == -1)
 	{
-		ft_putendl_fd("parsing error::UNCLOSED QUOTE", 2);
+		ft_putendl_fd("parsing error :: unclosed quote", 2);
+		ft_error(1);
 		return (NULL);
 	}
-	/*else
-	{
-		ft_putnbr_fd(words, 2);
-		ft_putendl_fd(" words in given input", 2);
-		sleep(2);
-	}*/
 	if (!(res = malloc(sizeof(char*) * (words + 1))))
 		return (NULL);
 	res[words] = NULL;
@@ -98,7 +93,6 @@ char		*fill_it(char *s, int *i, char c)
 	j = 0;
 	while (j < size)
 	{
-		//if (s[*i + j]!= '\'' && s[*i + j] != '\"')
 		new_one[j] = s[*i + j];
 		j++;
 	}

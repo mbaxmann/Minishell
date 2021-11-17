@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 23:40:00 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:18:52 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char	*put_env(char *str, int j, char **envp)
 	char	*aux2;
 
 	end = j;
-	while (str[end] && str[end] != ' ' && str[end] != '\"')
+	while (str[end] && str[end] != ' ' && str[end] != '\"' && str[end] != '\'' 
+			&& str[end] != '\\' && str[end] != ';' && str[end] != '.')
 		end++;
 	if (str[end])
 		aux1 = ft_strdup(str + end);
@@ -47,26 +48,27 @@ char	*put_env(char *str, int j, char **envp)
 	return (aux2);
 }
 
-void	ft_getenv_var(char **separate, char **envp)
+void	ft_getenv_var(char **separate, char **envp, int s_quote, int d_quote)
 {
 	int		i;
 	int		j;
-	int		single_quote;
 
 	i = 0;
-	single_quote = 0;
 	while (separate[i])
 	{
 		j = 0;
 		while (separate[i][j])
 		{
-			if (separate[i][j] == '$' && !single_quote)
+			if (separate[i][j] == '$' && !s_quote && separate[i][j + 1] != '.'
+				&& separate[i][j + 1] != ';' && separate[i][j + 1] != '\\' && separate[i][j + 1] != '\'')
 			{
 				separate[i] = put_env(separate[i], j, envp);
 				j--;
 			}
-			else if (separate[i][j] == '\'')
-				single_quote = 1 - single_quote;
+			if (!s_quote)
+				d_quote = (d_quote + (separate[i][j] == '\"')) % 2;
+			if (!d_quote)
+				s_quote = (s_quote + (separate[i][j] == '\'')) % 2;
 			j++;
 		}
 		i++;

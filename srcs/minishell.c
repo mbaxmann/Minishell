@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/17 00:08:16 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 16:41:05 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 
 	return_value = 0;
 	separate = ft_special_split(cmd, ' ');
-	ft_getenv_var(separate, envp);
-	clean_quotes(separate);
+	if (!separate)
+		return (1);
+	ft_getenv_var(separate, envp, 0, 0);
+	clean_quotes(separate, 0, 0);
 	if (!ft_strncmp("echo", separate[0], 5))
 		index = ft_lst_push(all_cmds, &ft_echo, separate);
 	else if (!ft_strncmp("cd", separate[0], 3))
@@ -60,6 +62,8 @@ int	parse_second(char *str, t_list **all_cmds, char ***envp)
 	int		i;
 
 	separate = ft_special_split(str, '|');
+	if (!separate)
+		return (0);
 	i = 0;
 	while (separate[i])
 	{
@@ -79,6 +83,8 @@ int	parse_first(char *str, t_list **all_cmds, char ***envp)
 	int		i;
 
 	separate = ft_special_split(str, ';');
+	if (!separate)
+		return (0);
 	i = 0;
 	while (separate[i])
 	{
@@ -119,7 +125,8 @@ int	main(int ac, char **av, char **envp)
 				write(STDOUT_FILENO, "exit\n", 5);
 				return (1);
 			}
-			parse_first(str, &all_cmds, &envp_cpy);
+			if (!parse_first(str, &all_cmds, &envp_cpy))
+				continue ;
 			free(str);
 		}
 	return (0);
