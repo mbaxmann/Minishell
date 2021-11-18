@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 16:25:09 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 16:20:35 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/18 16:35:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_handler(int signum)
 	if (signum == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		if (rl_line_buffer[0] == '\0')
+		if (rl_done == 0)
 		{
 			rl_on_new_line();
 			rl_replace_line("", 1);

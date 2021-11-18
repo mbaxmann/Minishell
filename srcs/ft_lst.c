@@ -17,15 +17,17 @@ t_list	*ft_lst_push(t_list **first, int (*funct)(char **av, char ***envp, int fd
 		char **separate)
 {
 	t_list	*new;
+	t_list	*first_cp;
 	
 	new = ft_lst_create(funct, separate);
 	if (*first == NULL)
 		*first = new;
 	else
 	{
-		while ((*first)->next)
-			*first = (*first)->next;
-		(*first)->next = new;
+		first_cp = *first;
+		while (first_cp->next)
+			first_cp = first_cp->next;
+		first_cp->next = new;
 	}
 	return (new);
 }

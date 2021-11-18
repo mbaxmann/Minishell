@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/17 19:33:12 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/18 21:40:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 		index = ft_lst_push(all_cmds, &ft_unset, separate);
 	else if (!ft_strncmp("./", separate[0], 2))
 		index = ft_lst_push(all_cmds, NULL, separate);
-	else if(!ft_strncmp("/", separate[0], 0))
+	else if(!ft_strncmp("/", separate[0], 1))
 		index = ft_lst_push(all_cmds, NULL, separate);
 	else
 	{
 		index = ft_lst_push(all_cmds, NULL, separate);
-		return_value = 1;
 	}
 	if (check_redirections(index) == -42)
 		return (1);
