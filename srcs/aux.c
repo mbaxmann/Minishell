@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:14:40 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/17 16:46:11 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/17 23:57:45 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ int		remove_quotes(char **str, int size, int s_q, int d_q)
 	size = 0;
 	while ((*str)[i])
 	{
-		if (((*str)[i] != '\'' && (*str)[i] != '\"') ||
-			(((*str)[i] == '\'' && d_q) || ((*str)[i] == '\"' && s_q)))
+		if (((*str)[i] != '\'' && (*str)[i] != '\"' && (*str)[i] != '\\') ||
+			(((*str)[i] == '\'' && d_q) || ((*str)[i] == '\"' && s_q))
+			|| ((s_q || d_q) && (*str)[i] == '\\'))
 			aux[size++] = (*str)[i];
 		else
 		{
@@ -55,8 +56,9 @@ void	clean_quotes(char **list, int d_q, int s_q)
 		j = 0;
 		while (list[i][j])
 		{
-			if ((list[i][j] != '\'' && list[i][j] != '\"') ||
-			((list[i][j] == '\'' && d_q) || (list[i][j] == '\"' && s_q)))
+			if ((list[i][j] != '\'' && list[i][j] != '\"' && list[i][j] != '\\') ||
+			((list[i][j] == '\'' && d_q) || (list[i][j] == '\"' && s_q))
+			|| ((s_q || d_q) && list[i][j] == '\\'))
 				q++;
 			else
 			{

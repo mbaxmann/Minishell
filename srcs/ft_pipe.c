@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 16:00:38 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/18 01:25:09 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,39 @@ static void	ft_close_pipe(int **pipefd, int nb, int j)
 	}
 }
 
+void	heredoc(char* delimiter)
+{
+	char	*str;
+	char	*aux;
+	int		tmp_fd;
+	
+	str = (char*) malloc (sizeof(char*));
+	str = NULL;
+	aux = NULL;
+	while (!aux || ft_strncmp(delimiter, aux, ft_strlen(delimiter)))
+	{
+		str = ft_strjoin(str, aux);
+		str = ft_strjoin(str, ft_strdup("\n"));
+		aux = readline(">");
+	}
+	free(aux);
+	aux = ttyname(STDIN_FILENO);
+	tmp_fd = open(aux, O_WRONLY);
+	write(tmp_fd, str, ft_strlen(str));
+	close(tmp_fd);
+	free(str);
+}
+
 static void	ft_set_pipe(int **pipefd, int i, int cmd_nbr, t_list *cmd)
 {
 	ft_close_pipe(pipefd, cmd_nbr - 1, i);
 	if (cmd->fd1 != -1 && dup2(cmd->fd1, STDOUT_FILENO) < 0)
 		ft_error(errno);
-	if (cmd->fd2 != -1 && dup2(cmd->fd2, STDIN_FILENO) < 0)
+	if (cmd->fd2 >= 0 && dup2(cmd->fd2, STDIN_FILENO) < 0)
 		ft_error(errno);
-	if (i != 0)
+	if (cmd->fd2 == -42)
+		heredoc(cmd->aux);
+	else if (i != 0)
 	{
 		dup2(pipefd[i - 1][0], STDIN_FILENO);
 		close(pipefd[i - 1][0]);

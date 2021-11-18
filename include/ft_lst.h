@@ -7,6 +7,7 @@ typedef struct	s_list
 	char			**arg;
 	int				fd1;
 	int				fd2;
+	char			*aux;
 	struct s_list	*next;
 }				t_list;
 

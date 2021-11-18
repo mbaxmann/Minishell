@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:56:17 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/15 21:49:55 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/18 01:06:57 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	take_redirection(t_list *new, char *arg)
 {
 	if (arg[0] == '>')
 	{
-		if (arg[1] == '>') /// THIS NEEDS TO BE IMPLEMENTED STILL
+		if (arg[1] == '>')
 			new->fd1 = open(arg + 2, O_CREAT | O_RDWR | O_APPEND, 0600);
 		else
 			new->fd1 = open(arg + 1, O_CREAT | O_RDWR | O_TRUNC, 0600);
@@ -32,7 +32,10 @@ int	take_redirection(t_list *new, char *arg)
 	else if (arg[0] == '<')
 	{
 		if (arg[1] == '<')
-			new->fd2 = open(arg + 2, O_RDWR, 0600);
+		{
+			new->fd2 = -42;
+			new->aux = ft_strdup(arg + 2);
+		}
 		else
 			new->fd2 = open(arg + 1, O_RDWR, 0600);
 		if (new->fd2 == -1)
