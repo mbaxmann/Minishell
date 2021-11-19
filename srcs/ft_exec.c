@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:11 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 17:57:04 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 18:57:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*ft_path_env(char **envp, int i, int j)
 	str = NULL;
 	while (envp[j] && ft_strncmp(envp[j], "PATH=", 5))
 		j++;
-	if (envp[j])
+	if (!envp[j])
 		return (NULL);
 	path_env = envp[j] + 5;
 	j = 0;
