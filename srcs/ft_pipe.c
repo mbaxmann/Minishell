@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/18 22:50:33 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:13:19 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,12 @@ int ft_do_one(t_list *cmd, int **pipefd, char ***envp)
 			ft_set_pipe(pipefd, 0, 1, cmd);
 			i = ft_exec(cmd, *envp);
 			if (i == -1)
-				printf("minishell: %s: No such file or directori\n",  cmd->arg[0]);
+			{
+				ft_putstr_fd("minishell: ", 2, 0);
+				ft_putstr_fd(cmd->arg[0], 2, 0);
+				ft_putendl_fd(": command not found", 2);
+				exit(127);
+			}
 			exit(1);
 		}
 		waitpid(-1, &i, WUNTRACED);
@@ -145,16 +150,16 @@ int	ft_pipe(t_list *cmd, char ***envp)
 			ft_sig_manage(0);
 			ft_set_pipe(pipefd, i, cmd_nbr, cmd);
 			if (cmd->funct == NULL)
-				i = ft_exec(cmd, *envp);
+				ret = ft_exec(cmd, *envp);
 			else
-				i = cmd->funct(cmd->arg, envp, cmd->fd1);
-			exit(i);
+				ret = cmd->funct(cmd->arg, envp, cmd->fd1);
+			exit(ret);
 		}
 		cmd = cmd->next;
 	}
 	i = -1;
 	ft_close_pipe(pipefd, cmd_nbr - 1);
-	while (++i < cmd_nbr - 1 && cmd_nbr > 1)
+	while (++i < cmd_nbr && cmd_nbr > 1)
 	{
 		waitpid(-1, &ret, WUNTRACED);
 	}

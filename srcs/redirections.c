@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:56:17 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/18 23:49:27 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 10:46:38 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	check_redirections(t_list *new)
 
 	i = 0;
 	while (++i && new->arg && new->arg[i])
+	{
 		if (new->arg[i][0] == '>' || new->arg[i][0] == '<')
 		{
 			if (redirect(new->arg[i]))
@@ -76,5 +77,6 @@ int	check_redirections(t_list *new)
 			new->arg = erase_from_array(new->arg, i);
 			return (1);
 		}
+	}
 	return (0);
 }

@@ -7,6 +7,7 @@ SRCS	=		srcs/builtin/ft_cd.c \
 				srcs/builtin/ft_unset.c \
 				srcs/builtin/ft_exit.c \
 				srcs/aux.c \
+				srcs/ft_clean.c \
 				srcs/ft_lst.c \
 				srcs/ft_pipe.c \
 				srcs/minishell.c \
@@ -28,7 +29,7 @@ RM      =       rm -rf
 
 HEADER	=		include/minishell.h
 
-LINK	=	-lft -lreadline -lncurses -L/usr/local/opt/readline/lib
+LINK	=		-lft -lreadline -lncurses -L/usr/local/opt/readline/lib
 
 LIB     =       libft/libft.a
 

@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:47:08 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 14:18:33 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 10:48:09 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	ft_update_pwd(char **envp)
 
 int	ft_cd(char **av, char ***envp, int fd1)
 {
-	char *path;
+	char	*path;
 
 	(void)envp;
 	(void)fd1;

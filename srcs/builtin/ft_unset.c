@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:56:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 19:51:13 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 11:00:28 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,12 @@ static int	ft_not_exist(char **envp, char *str)
 	return (1);
 }
 
-static void	ft_delete(char ***envp, char *str)
+static void	ft_delete(char ***envp, char *str, int i, int k)
 {
-	int		i;
-	int		k;
 	int		len;
 	char	**envp_cp;
 	char	**tmp;
 
-	i = 0;
-	k = 0;
 	tmp = *envp;
 	if (ft_not_exist(*envp, str))
 		return ;
@@ -63,11 +59,7 @@ static void	ft_delete(char ***envp, char *str)
 	while (i + k < len)
 	{
 		if (!ft_strncmp(tmp[i + k], str, ft_strlen(str)))
-		{
-			free(tmp[i + k]);
-			k++;
-			i--;
-		}
+			free(tmp[i-- + k++]);
 		else
 			envp_cp[i] = tmp[i + k];
 		i++;
@@ -93,7 +85,7 @@ int	ft_unset(char **av, char ***envp, int fd1)
 			ft_putstr_fd("» : invalid identifier\n", fd1, 0);
 			return (1);
 		}
-		ft_delete(envp, av[i]);
+		ft_delete(envp, av[i], 0, 0);
 		i++;
 	}
 	return (0);

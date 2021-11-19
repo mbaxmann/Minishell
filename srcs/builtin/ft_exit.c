@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 14:32:07 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 01:52:23 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:02:14 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	ft_exit(char **av, char ***envp, int fd1)
 {
 	int	num;
+
 	(void)av;
 	(void)envp;
 	(void)fd1;
@@ -23,7 +24,7 @@ int	ft_exit(char **av, char ***envp, int fd1)
 		exit(0);
 	if (!num)
 	{
-		if (ft_strncmp(av[1], "0", 2) && ft_strncmp(av[1], "+0", 2) 
+		if (ft_strncmp(av[1], "0", 2) && ft_strncmp(av[1], "+0", 2)
 			&& ft_strncmp(av[1], "-0", 2))
 			exit(255);
 		else if (!av[2])

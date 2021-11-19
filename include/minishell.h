@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 00:22:20 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 10:43:49 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		ft_error(int errno_value);
 int		ft_exec(t_list *cmd, char **envp);
 char	**ft_special_split(char *s, char c);
 void	clean_quotes(char **list, int d_q, int s_q);
-int		clean_n(char **list, int yes);
+int		clean_n(char **list, int yes, int i);
+t_list	*ft_builtins(char **separate, t_list **all_cmds);
 
-# endif
+#endif
