@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 10:43:49 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:41:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@
 # include "ft_lst.h"
 # include "ft_envp.h"
 # include "builtin.h"
+# include "ft_pipe.h"
 # include "../libft/libft.h"
 
-//extern int	errno;
-
 char	*ft_relpath(void);
-int		ft_pipe(t_list *cmd, char ***envp);
 int		check_redirections(t_list *new);
 char	**erase_from_array(char **array, int element);
 char	*ft_strjoin2(char const *s1, char const *s2);
