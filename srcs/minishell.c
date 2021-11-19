@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/19 16:09:27 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 18:11:06 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	t_list	*index;
 
 	separate = ft_special_split(cmd, ' ');
-	if (!separate)
+	if (!separate[0])
+	{
+		free (separate);
 		return (1);
+	}
 	ft_getenv_var(separate, envp, 0, 0);
 	clean_n(separate, 1, 0);
 	clean_quotes(separate, 0, 0);
@@ -35,21 +38,23 @@ int	parse_second(char *str, t_list **all_cmds, char ***envp)
 {
 	char	**separate;
 	int		i;
+	int		interrupt;
 
 	separate = ft_special_split(str, '|');
 	if (!separate)
 		return (0);
 	i = 0;
+	interrupt = 0;
 	while (separate[i])
 	{
-		if (!separate [i][0])
-			return (0);
-		if (make_cmd(separate[i], all_cmds, *envp))
-			return (0);
+		if (!separate [i][0] || make_cmd(separate[i], all_cmds, *envp))
+			interrupt = 1;
 		free(separate[i]);
 		i++;
 	}
 	free(separate);
+	if (interrupt)
+		return (0);
 	ft_pipe(*all_cmds, envp);
 	return (42);
 }
@@ -58,21 +63,23 @@ int	parse_first(char *str, t_list **all_cmds, char ***envp)
 {
 	char	**separate;
 	int		i;
+	int		interrupt;
 
 	separate = ft_special_split(str, 127);
 	if (!separate)
 		return (0);
 	i = 0;
+	interrupt = 0;
 	while (separate[i])
 	{
 		if (!parse_second(separate[i], all_cmds, envp))
-			return (0);
+			interrupt = 1;
 		free(separate[i]);
 		ft_lst_free(*all_cmds);
 		i++;
 	}
 	free(separate);
-	return (1);
+	return (!(interrupt));
 }
 
 int	main(int ac, char **av, char **envp)

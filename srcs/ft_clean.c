@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 10:21:42 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/19 16:15:54 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 18:30:36 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	clean_n(char **list, int yes, int i)
 
 	if (ft_strncmp("echo", list[0], 5) || !list[1])
 		return (0);
-	while (*list + ++i && yes)
+	while (list[++i] && yes)
 	{
 		yes = 0;
 		j = 0;
