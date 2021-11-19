@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 23:16:27 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/17 19:08:32 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:53:16 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static char	**first_alloc(char *s, char c)
 	words = count_words((char*)s, c);
 	if (words == -1)
 	{
-		ft_putendl_fd("parsing error :: unclosed quote", 2);
+		ft_putstr_fd("unclosed quote :: ", 2, 0);
 		ft_error(22);
 		return (NULL);
 	}

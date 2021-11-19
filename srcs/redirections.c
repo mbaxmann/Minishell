@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:56:17 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/18 01:06:57 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:49:27 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	ft_error(int errno_value)
 {
+	ft_putstr_fd("ERROR ::", 2, 0);
 	ft_putendl_fd(strerror(errno_value), 2);
 	return (0);
 }

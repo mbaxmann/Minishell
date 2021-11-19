@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 16:18:52 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:44:39 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_getenv(char *env, int end, char **envp)
 	int	i;
 
 	i = 0;
+	if (end <= 0)
+		return (NULL);
 	while (envp[i])
 	{
 		if (!ft_strncmp(env, envp[i], end))
@@ -26,22 +28,27 @@ char	*ft_getenv(char *env, int end, char **envp)
 	return (NULL);
 }
 
-char	*put_env(char *str, int j, char **envp)
+char	*put_env(char *str, int j, char **envp, int *moved)
 {
 	int		end;
 	char	*aux1;
 	char	*aux2;
 
-	end = j;
+	end = j + 1;
 	while (str[end] && str[end] != ' ' && str[end] != '\"' && str[end] != '\'' 
-			&& str[end] != '\\' && str[end] != ';' && str[end] != '.')
+			&& str[end] != '\\' && str[end] != ';' && str[end] != '.'
+			&& str[end] != '=' && str[end] != '.' && str[end] != '$'
+			&& str[end] != '/')
 		end++;
+	if (str[j + 1] >='0' && str[j + 1] <='9')
+		end = j + 2;
 	if (str[end])
 		aux1 = ft_strdup(str + end);
 	else
 		aux1 = NULL;
 	aux2 = ft_getenv(str + 1 + j, end - j - 1, envp);
 	str[j] = '\0';
+	*moved = ft_strlen(aux2);
 	aux2 = ft_strjoin(str, aux2);
 	if (aux1)
 		aux2 = ft_strjoin(aux2, aux1);
@@ -52,24 +59,29 @@ void	ft_getenv_var(char **separate, char **envp, int s_quote, int d_quote)
 {
 	int		i;
 	int		j;
+	int		aux;
 
 	i = 0;
 	while (separate[i])
 	{
 		j = 0;
+		s_quote = 0;
+		d_quote = 0;
 		while (separate[i][j])
 		{
-			if (separate[i][j] == '$' && !s_quote && separate[i][j + 1] != '.'
-				&& separate[i][j + 1] != ';' && separate[i][j + 1] != '\\' && separate[i][j + 1] != '\'')
-			{
-				separate[i] = put_env(separate[i], j, envp);
-				j--;
-			}
-			if (!s_quote)
-				d_quote = (d_quote + (separate[i][j] == '\"')) % 2;
 			if (!d_quote)
 				s_quote = (s_quote + (separate[i][j] == '\'')) % 2;
-			j++;
+			if (!s_quote)
+				d_quote = (d_quote + (separate[i][j] == '\"')) % 2;
+			if (separate[i][j] == '$' && !s_quote && separate[i][j + 1] != ' ')
+			{
+				separate[i] = put_env(separate[i], j, envp, &aux);
+				if (!separate[i][0])
+					separate[i][0] = 127;
+				j += aux - 1;
+			}
+			else
+				j++;
 		}
 		i++;
 	}

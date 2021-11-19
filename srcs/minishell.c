@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/18 21:40:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 00:28:33 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	if (!separate)
 		return (1);
 	ft_getenv_var(separate, envp, 0, 0);
+	clean_n(separate, 1);
 	clean_quotes(separate, 0, 0);
 	if (!ft_strncmp("echo", separate[0], 5))
 		index = ft_lst_push(all_cmds, &ft_echo, separate);
@@ -130,5 +131,5 @@ int	main(int ac, char **av, char **envp)
 				continue ;
 			free(str);
 		}
-	return (0);
+	return (1);
 }

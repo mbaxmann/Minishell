@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/18 21:51:28 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/18 22:50:33 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	ft_pipe(t_list *cmd, char ***envp)
 	}
 	i = -1;
 	ft_close_pipe(pipefd, cmd_nbr - 1);
-	while (++i < cmd_nbr && cmd_nbr > 1)
+	while (++i < cmd_nbr - 1 && cmd_nbr > 1)
 	{
 		waitpid(-1, &ret, WUNTRACED);
 	}

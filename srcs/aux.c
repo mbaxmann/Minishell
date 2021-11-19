@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:14:40 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/17 23:57:45 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 00:35:02 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		remove_quotes(char **str, int size, int s_q, int d_q)
 
 	aux = (char*)malloc (sizeof (char) * (size + 1));
 	if (!aux)
-		return (ft_error(errno));
+		return (ft_error(errno) - 250);
 	i = 0;
 	size = 0;
 	while ((*str)[i])
@@ -41,6 +41,40 @@ int		remove_quotes(char **str, int size, int s_q, int d_q)
 	return (size);
 }
 
+int	clean_n(char **list, int yes)
+{
+	int	i;
+	int	j;
+
+	if (ft_strncmp("echo", list[0], 5) || !list[1])
+		return (0);
+	i = 0;
+	while (*list + ++i && yes)
+	{
+		yes = 0;
+		j = 0;
+		while (list[i][j] == '\"' || list[i][j] == '\'')
+			j++;
+		if (ft_strncmp("-n", list[i] + j, 2))
+			continue ;
+		j++;
+		while (list[i][j] == 'n')
+			j++;
+		while (list[i][j] == '\"' || list[i][j] == '\'')
+			j++;
+		if (list[i][j])
+			continue ;
+		free(list[i]);
+		list[i] = ft_strdup("-n");
+		ft_putstr_fd(list[i], 2, 0);
+		ft_putendl_fd("--CLEANED", 2);
+		if (i > 1)
+			list[i][0] = 127;
+		yes = 1;
+	}
+	return (yes);
+}
+
 void	clean_quotes(char **list, int d_q, int s_q)
 {
 	int	i;
@@ -53,6 +87,8 @@ void	clean_quotes(char **list, int d_q, int s_q)
 	while (list[i])
 	{
 		q = 0;
+		d_q = 0;
+		s_q = 0;
 		j = 0;
 		while (list[i][j])
 		{
@@ -63,12 +99,12 @@ void	clean_quotes(char **list, int d_q, int s_q)
 			else
 			{
 				d_q = (d_q + list[i][j] == '\"') % 2;
-				s_q = (s_q + list[i][j] == '\"') % 2;
+				s_q = (s_q + list[i][j] == '\'') % 2;
 			}
 			j++;
 		}
 		if (q != j)
-			if (!remove_quotes(list + i, q, 0, 0))
+			if (remove_quotes(list + i, q, 0, 0) < 0)
 				return ;
 		i++;
 	}
