@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/19 12:55:42 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 16:09:27 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 {
 	char	**separate;
-	int		return_value;
 	t_list	*index;
 
-	return_value = 0;
 	separate = ft_special_split(cmd, ' ');
 	if (!separate)
 		return (1);
@@ -30,13 +28,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 		index = ft_lst_push(all_cmds, NULL, separate);
 	if (check_redirections(index) == -42)
 		return (1);
-	if (return_value)
-	{
-		ft_putstr_fd("minishell: ", 2, 0);
-		ft_putstr_fd(separate[0], 2, 0);
-		ft_putstr_fd(": command not found\n", 2, 0);
-	}
-	return (return_value);
+	return (0);
 }
 
 int	parse_second(char *str, t_list **all_cmds, char ***envp)
@@ -50,6 +42,8 @@ int	parse_second(char *str, t_list **all_cmds, char ***envp)
 	i = 0;
 	while (separate[i])
 	{
+		if (!separate [i][0])
+			return (0);
 		if (make_cmd(separate[i], all_cmds, *envp))
 			return (0);
 		free(separate[i]);
@@ -78,7 +72,7 @@ int	parse_first(char *str, t_list **all_cmds, char ***envp)
 		i++;
 	}
 	free(separate);
-	return (0);
+	return (1);
 }
 
 int	main(int ac, char **av, char **envp)
