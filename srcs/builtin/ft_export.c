@@ -6,7 +6,7 @@
 /*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:15:10 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 19:28:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/18 23:07:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	ft_valid(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '=')
+		if (!ft_isalpha(str[i]) && str[i] != '=')
 			return (0);
 		i++;
 	}
@@ -88,9 +88,9 @@ int	ft_export(char **av, char ***envp, int fd1)
 		{
 			if (!ft_valid(av[i]))
 			{
-				ft_putstr_fd("minishell: export: « ", fd1, 0);
-				ft_putstr_fd(av[i], fd1, 0);
-				ft_putstr_fd("» : invalid identifier\n", fd1, 0);
+				ft_putstr_fd("minishell: export: « ", 2, 0);
+				ft_putstr_fd(av[i], 2, 0);
+				ft_putstr_fd("» : invalid identifier\n", 2, 0);
 				return (1);
 			}
 			if (!ft_replace(*envp, av[i]))

@@ -9,6 +9,7 @@ SRCS	=		srcs/builtin/ft_cd.c \
 				srcs/aux.c \
 				srcs/ft_lst.c \
 				srcs/ft_pipe.c \
+				srcs/ft_pipe2.c \
 				srcs/minishell.c \
 				srcs/ft_envp.c \
 				srcs/redirections.c \

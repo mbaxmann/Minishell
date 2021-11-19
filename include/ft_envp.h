@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:08:08 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 15:11:12 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:25:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,4 @@ char	**ft_envpdup(char **envp);
 void	ft_getenv_var(char **separate, char **envp, int s_quote, int d_quote);
 void	ft_last_cmd(int wstatus, char **envp);
 
-# endif
+#endif
