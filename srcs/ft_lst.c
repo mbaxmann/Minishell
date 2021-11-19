@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 10:25:46 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/19 10:27:52 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 23:48:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ void	ft_lst_free(t_list *first)
 		tmp = first;
 		first = first->next;
 		i = 0;
-		while (tmp->arg[i])
+		if (tmp->arg)
 		{
-			free(tmp->arg[i]);
-			i++;
+			while (tmp->arg[i])
+			{
+				free(tmp->arg[i]);
+				i++;
+			}
 		}
 		if (tmp->arg)
 			free(tmp->arg);

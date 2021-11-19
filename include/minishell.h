@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 12:41:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 23:45:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int		ft_exec(t_list *cmd, char **envp);
 char	**ft_special_split(char *s, char c);
 void	clean_quotes(char **list, int d_q, int s_q);
 int		clean_n(char **list, int yes, int i);
+void	ft_add_heredoc(t_list **index);
+void	heredoc(char *delimiter, int *pipefd);	
 t_list	*ft_builtins(char **separate, t_list **all_cmds);
 
 #endif

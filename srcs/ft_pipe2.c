@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 11:32:25 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 19:53:52 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/20 00:07:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ int	ft_do_child(t_data *data, t_list *cmd, int i)
 	{
 		ft_sig_manage(0);
 		ft_set_pipe(data, i, cmd);
-		if (cmd->funct == NULL)
+		if (cmd->funct == NULL && cmd->arg)
 			i = ft_exec(cmd, *(data->envp));
-		else
+		else if (cmd->arg)
 			i = cmd->funct(cmd->arg, data->envp, cmd->fd1);
+		else
+			heredoc(cmd->next->aux, data->pipefd[i]);	
 		exit(i);
 	}
 	return (0);
@@ -73,11 +75,7 @@ int	ft_do_one(t_list *cmd, t_data *data, int i)
 			ft_set_pipe(data, 0, cmd);
 			i = ft_exec(cmd, *(data->envp));
 			if (i == -1)
-			{
-				ft_putstr_fd("minishell: ", 2, 0);
-				ft_putstr_fd(cmd->arg[0], 2, 0);
-				ft_putendl_fd(": command not found", 2);
-			}
+				ft_error(errno);
 			exit(1);
 		}
 		waitpid(-1, &i, WUNTRACED);

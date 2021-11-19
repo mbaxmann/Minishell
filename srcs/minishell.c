@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/19 19:01:15 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 23:35:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 		index = ft_lst_push(all_cmds, NULL, separate);
 	if (check_redirections(index) == -42)
 		return (1);
+	ft_add_heredoc(all_cmds);
 	return (0);
 }
 

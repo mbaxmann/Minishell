@@ -17,6 +17,7 @@ SRCS	=		srcs/builtin/ft_cd.c \
 				srcs/ft_sig_manage.c \
 				srcs/ft_special_split.c \
 				srcs/ft_exec.c \
+				srcs/ft_heredoc.c \
 
 OBJS    =       ${SRCS:.c=.o}
 
