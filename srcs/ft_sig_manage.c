@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 16:25:09 by user42            #+#    #+#             */
-/*   Updated: 2021/11/18 16:35:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 12:37:51 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_sig_manage(int mode)
 {
 	struct sigaction	sa;
 
+	ft_memset(&sa, 0, sizeof(sa));
 	sa.sa_flags = SA_RESTART;
 	if (mode == 1)
 		sa.sa_handler = ft_handler;

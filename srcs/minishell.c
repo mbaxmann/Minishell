@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/19 10:59:23 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 12:55:42 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,9 @@ int	main(int ac, char **av, char **envp)
 	ft_sig_manage(1);
 	all_cmds = NULL;
 	if (ac >= 3 && !ft_strncmp(av[1], "-c", 3))
-		return (parse_first(av[2], &all_cmds, &envp_cpy));
-	while (1)
+		parse_first(av[2], &all_cmds, &envp_cpy);
+	while (!all_cmds)
 	{
-		all_cmds = NULL;
 		str = readline("==> ");
 		add_history(str);
 		if (!str)
@@ -102,9 +101,10 @@ int	main(int ac, char **av, char **envp)
 			write(STDOUT_FILENO, "exit\n", 5);
 			return (1);
 		}
-		if (!parse_first(str, &all_cmds, &envp_cpy))
-			continue ;
+		if (parse_first(str, &all_cmds, &envp_cpy))
+			all_cmds = NULL;
 		free(str);
 	}
-	return (1);
+	ft_forget_env(envp_cpy);
+	return (0);
 }

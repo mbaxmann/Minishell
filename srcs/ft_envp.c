@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 11:37:06 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 13:57:22 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ void	ft_getenv_var(char **separate, char **envp, int s_quote, int d_quote)
 	int		aux;
 
 	i = -1;
+	aux = 1;
 	while (separate[++i])
 	{
 		j = -1;
 		s_quote = 0;
 		d_quote = 0;
-		while (separate[i][++j])
+		while (separate[i][0] != 127 && separate[i][++j])
 		{
 			if (!d_quote)
 				s_quote = (s_quote + (separate[i][j] == '\'')) % 2;
@@ -78,31 +79,23 @@ void	ft_getenv_var(char **separate, char **envp, int s_quote, int d_quote)
 				separate[i] = put_env(separate[i], j, envp, &aux);
 				if (!separate[i][0])
 					separate[i][0] = 127;
-				j += aux - 2;
+				j += aux - 2 + (aux == 0);
 			}
 		}
 	}
 }
 
-void	ft_last_cmd(int wstatus, char **envp)
+void	ft_forget_env(char	**env_cpy)
 {
-	int		i;
-	char	*tmp;
+	int	i;
 
 	i = 0;
-	tmp = NULL;
-	if (WIFSIGNALED(wstatus))
+	while (env_cpy[i])
 	{
-		if (WCOREDUMP(wstatus))
-			printf("Quit (core dumped)\n");
-		tmp = ft_itoa(WTERMSIG(wstatus), 'd');
-	}
-	else if (WIFEXITED(wstatus))
-		tmp = ft_itoa(WEXITSTATUS(wstatus), 'd');
-	while (ft_strncmp(envp[i], "?=", 2))
+		free(env_cpy[i]);
 		i++;
-	free(envp[i]);
-	envp[i] = ft_strjoin(ft_strdup("?="), tmp);
+	}
+	free(env_cpy);
 }
 
 char	**ft_envpdup(char **envp)

@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:11 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 11:03:31 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:59:00 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,25 @@ t_list	*ft_builtins(char **separate, t_list **all_cmds)
 	else
 		index = NULL;
 	return (index);
+}
+
+void	ft_last_cmd(int wstatus, char **envp)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	if (WIFSIGNALED(wstatus))
+	{
+		if (WCOREDUMP(wstatus))
+			printf("Quit (core dumped)\n");
+		tmp = ft_itoa(WTERMSIG(wstatus), 'd');
+	}
+	else if (WIFEXITED(wstatus))
+		tmp = ft_itoa(WEXITSTATUS(wstatus), 'd');
+	while (ft_strncmp(envp[i], "?=", 2))
+		i++;
+	free(envp[i]);
+	envp[i] = ft_strjoin(ft_strdup("?="), tmp);
 }

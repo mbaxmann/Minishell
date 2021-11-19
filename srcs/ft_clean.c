@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 10:21:42 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/19 10:21:49 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 13:54:13 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	clean_quotes(char **list, int d_q, int s_q)
 		d_q = 0;
 		s_q = 0;
 		j = -1;
-		while (list[i][++j])
+		while (list[i][++j] && list[i][0] != 127)
 		{
 			if (quotable(list[i][j], s_q, d_q))
 				q++;
