@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 19:35:47 by user42            #+#    #+#             */
-/*   Updated: 2021/11/16 20:17:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 11:02:34 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,13 @@ static int	ft_get_sort(char **envp, int len)
 		else if (i == len)
 			return (i);
 		i++;
-
 	}
 	return (i);
 }
 
 static void	ft_write(int i, int fd1, char **envp_cp)
 {
-	int 	j;
+	int		j;
 	char	c;
 
 	j = 0;

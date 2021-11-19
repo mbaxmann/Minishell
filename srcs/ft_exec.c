@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:11 by user42            #+#    #+#             */
-/*   Updated: 2021/11/17 19:54:55 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 11:03:31 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,17 @@ static char	*ft_nstrdup(char *str, int i)
 	return (ret);
 }
 
-static char	*ft_path_env(char **envp, int i)
+static char	*ft_path_env(char **envp, int i, int j)
 {
 	char	*str;
 	char	*path_env;
-	int		j;
 
 	str = NULL;
-	j = 0;
 	while (envp[j] && ft_strncmp(envp[j], "PATH=", 5))
 		j++;
 	if (envp[j] == NULL)
 		return (NULL);
-	path_env = envp[j];
-	path_env += 5;
+	path_env = envp[j] + 5;
 	j = 0;
 	while (i && path_env)
 	{
@@ -77,10 +74,37 @@ int	ft_exec(t_list *cmd, char **envp)
 		ret = execve(path, cmd->arg, envp);
 		if (path)
 			free(path);
-		path = ft_path_env(envp, i);
+		path = ft_path_env(envp, i, 0);
 		if (path)
 			path = ft_strjoin(path, ft_strdup(cmd->arg[0]));
 		i++;
 	}
 	return (-1);
+}
+
+t_list	*ft_builtins(char **separate, t_list **all_cmds)
+{
+	t_list	*index;
+
+	if (!ft_strncmp("echo", separate[0], 5))
+		index = ft_lst_push(all_cmds, &ft_echo, separate);
+	else if (!ft_strncmp("cd", separate[0], 3))
+		index = ft_lst_push(all_cmds, &ft_cd, separate);
+	else if (!ft_strncmp("pwd", separate[0], 4))
+		index = ft_lst_push(all_cmds, &ft_pwd, separate);
+	else if (!ft_strncmp("exit", separate[0], 6))
+		index = ft_lst_push(all_cmds, &ft_exit, separate);
+	else if (!ft_strncmp("env", separate[0], 4))
+		index = ft_lst_push(all_cmds, &ft_env, separate);
+	else if (!ft_strncmp("export", separate[0], 7))
+		index = ft_lst_push(all_cmds, &ft_export, separate);
+	else if (!ft_strncmp("unset", separate[0], 6))
+		index = ft_lst_push(all_cmds, &ft_unset, separate);
+	else if (!ft_strncmp("./", separate[0], 2))
+		index = ft_lst_push(all_cmds, NULL, separate);
+	else if (!ft_strncmp("/", separate[0], 1))
+		index = ft_lst_push(all_cmds, NULL, separate);
+	else
+		index = NULL;
+	return (index);
 }

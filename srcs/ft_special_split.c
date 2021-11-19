@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/15 23:16:27 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/17 19:08:32 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 10:29:12 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	size_word(char *s, int i, char c)
 {
-	int j;
-	int k;
+	int	j;
+	int	k;
 
 	j = 0;
 	while (s[i + j] != c && s[i + j])
@@ -37,9 +37,9 @@ static int	size_word(char *s, int i, char c)
 
 static int	count_words(char *str, char c)
 {
-	int i;
-	int words;
-	int first;
+	int	i;
+	int	words;
+	int	first;
 
 	i = 0;
 	first = 1;
@@ -67,20 +67,21 @@ static char	**first_alloc(char *s, char c)
 	int		words;
 	char	**res;
 
-	words = count_words((char*)s, c);
+	words = count_words((char *)s, c);
 	if (words == -1)
 	{
-		ft_putendl_fd("parsing error :: unclosed quote", 2);
+		ft_putstr_fd("unclosed quote :: ", 2, 0);
 		ft_error(22);
 		return (NULL);
 	}
-	if (!(res = malloc(sizeof(char*) * (words + 1))))
+	res = malloc(sizeof(char *) * (words + 1));
+	if (!res)
 		return (NULL);
 	res[words] = NULL;
 	return (res);
 }
 
-char		*fill_it(char *s, int *i, char c)
+char	*fill_it(char *s, int *i, char c)
 {
 	char	*new_one;
 	int		j;
@@ -101,7 +102,7 @@ char		*fill_it(char *s, int *i, char c)
 	return (new_one);
 }
 
-char		**ft_special_split(char *s, char c)
+char	**ft_special_split(char *s, char c)
 {
 	int		i;
 	int		words;
