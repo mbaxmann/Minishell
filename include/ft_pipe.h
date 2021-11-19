@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 12:03:57 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 12:28:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 19:53:00 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_data
 }				t_data;
 
 int		ft_pipe(t_list *cmd, char ***envp);
-int		ft_do_one(t_list *cmd, t_data *data);
+int		ft_do_one(t_list *cmd, t_data *data, int i);
 int		ft_do_child(t_data *data, t_list *cmd, int i);
 t_data	*ft_prep(t_list *cmd, char ***envp);
 void	ft_free_pipe(t_data *data);

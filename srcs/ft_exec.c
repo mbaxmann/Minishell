@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:03:11 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 18:57:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 19:09:58 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	ft_last_cmd(int wstatus, char **envp)
 	if (WIFSIGNALED(wstatus))
 	{
 		if (WCOREDUMP(wstatus))
-			printf("Quit (core dumped)\n");
+			ft_putendl_fd("Quit (core dumped)", 2);
 		tmp = ft_itoa(WTERMSIG(wstatus), 'd');
 	}
 	else if (WIFEXITED(wstatus))

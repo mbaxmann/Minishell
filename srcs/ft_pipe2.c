@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 11:32:25 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 18:32:59 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 19:53:52 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ t_data	*ft_prep(t_list *cmd, char ***envp)
 	return (data);
 }
 
-int	ft_do_one(t_list *cmd, t_data *data)
+int	ft_do_one(t_list *cmd, t_data *data, int i)
 {
 	pid_t	pid;
-	int		i;
 
-	i = 0;
 	data->cmd_nbr = 1;
 	if (cmd->funct == NULL)
 	{

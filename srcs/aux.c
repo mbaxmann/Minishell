@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:14:40 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/19 14:57:06 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 19:08:26 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	**erase_from_array(char **array, int element)
 	while (array[++i])
 		if (i != element)
 			new_one[aux++] = ft_strdup(array[i]);
-//	new_one[aux] = malloc(sizeof(char));
 	new_one[aux] = NULL;
 	i = -1;
 	while (array[++i])

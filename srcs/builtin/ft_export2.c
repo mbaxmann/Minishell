@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 19:35:47 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 11:02:34 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 19:47:58 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	ft_export2(char **envp, int fd1)
 	len = 0;
 	while (envp_cp[len])
 		len++;
-	free(envp_cp[len]);
+	free(envp_cp[len - 1]);
+	envp_cp[len - 1] = NULL;
 	len--;
 	i = ft_get_sort(envp_cp, len);
 	while (i != len)

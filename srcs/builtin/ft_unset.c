@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:56:48 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 11:00:28 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 19:50:25 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int	ft_unset(char **av, char ***envp, int fd1)
 	{
 		if (!ft_valid(av[i]))
 		{
-			ft_putstr_fd("minishell: unset: « ", fd1, 0);
-			ft_putstr_fd(av[i], fd1, 0);
-			ft_putstr_fd("» : invalid identifier\n", fd1, 0);
+			ft_putstr_fd("minishell: unset: « ", 2, 0);
+			ft_putstr_fd(av[i], 2, 0);
+			ft_putstr_fd("» : invalid identifier\n", 2, 0);
 			return (1);
 		}
 		ft_delete(envp, av[i], 0, 0);

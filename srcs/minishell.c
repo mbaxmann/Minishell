@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/19 18:11:06 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 19:01:15 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	parse_first(char *str, t_list **all_cmds, char ***envp)
 	int		i;
 	int		interrupt;
 
+	if (!str)
+		return (1);
 	separate = ft_special_split(str, 127);
 	if (!separate)
 		return (0);
@@ -100,12 +102,12 @@ int	main(int ac, char **av, char **envp)
 		if (!str)
 		{
 			write(STDOUT_FILENO, "exit\n", 5);
-			return (1);
+			exit (1);
 		}
 		if (parse_first(str, &all_cmds, &envp_cpy))
 			all_cmds = NULL;
 		free(str);
 	}
 	ft_forget_env(envp_cpy);
-	return (0);
+	exit (0);
 }

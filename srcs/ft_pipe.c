@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 12:43:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 19:53:28 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_pipe(t_list *cmd, char ***envp)
 	i = -1;
 	data = ft_prep(cmd, envp);
 	if (data->cmd_nbr == 1)
-		data->ret = ft_do_one(cmd, data);
+		data->ret = ft_do_one(cmd, data, 0);
 	while (++i < data->cmd_nbr && data->cmd_nbr > 1)
 	{
 		data->pid[i] = fork();

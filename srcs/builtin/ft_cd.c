@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 17:47:08 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 10:48:09 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 18:53:11 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	ft_cd(char **av, char ***envp, int fd1)
 		path = av[1];
 	if (chdir(path) == -1)
 	{
-		ft_putstr_fd("cd: no such file or directory: ", STDOUT_FILENO, 0);
-		ft_putendl_fd(path, STDOUT_FILENO);
+		ft_putstr_fd("cd: no such file or directory: ", 2, 0);
+		ft_putendl_fd(path, 2);
 		return (1);
 	}
 	else

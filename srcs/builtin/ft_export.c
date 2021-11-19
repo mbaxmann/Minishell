@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 16:15:10 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 12:41:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/19 19:38:02 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,17 @@ static int	ft_valid(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
-		if (!ft_isalpha(str[i]) && str[i] != '=')
+		if (!ft_isalnum(str[i]))
+			return (0);
+		i++;
+	}
+	if (i == 0)
+		return (0);
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '=')
 			return (0);
 		i++;
 	}
@@ -88,7 +96,7 @@ int	ft_export(char **av, char ***envp, int fd1)
 		{
 			if (!ft_valid(av[i]))
 			{
-				ft_putstr_fd("minishell: export: « ", 2, 0);
+				ft_putstr_fd("minishell: export: «", 2, 0);
 				ft_putstr_fd(av[i], 2, 0);
 				ft_putstr_fd("» : invalid identifier\n", 2, 0);
 				return (1);

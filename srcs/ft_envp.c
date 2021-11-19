@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/19 13:57:22 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 19:55:08 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_getenv_var(char **separate, char **envp, int s_quote, int d_quote)
 	int		aux;
 
 	i = -1;
-	aux = 1;
 	while (separate[++i])
 	{
 		j = -1;
