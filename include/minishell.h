@@ -6,11 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 19:32:48 by user42            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/11/19 12:32:20 by user42           ###   ########.fr       */
-=======
-/*   Updated: 2021/11/19 10:43:49 by olozano-         ###   ########.fr       */
->>>>>>> 9b46dd9ae451d8fe76ef6174fc53ffdee64fce9a
+/*   Updated: 2021/11/19 12:41:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +36,8 @@
 # include "ft_lst.h"
 # include "ft_envp.h"
 # include "builtin.h"
-<<<<<<< HEAD
 # include "ft_pipe.h"
 # include "../libft/libft.h"
-=======
-# include "../libft/libft.h"
-
-//extern int	errno;
->>>>>>> 9b46dd9ae451d8fe76ef6174fc53ffdee64fce9a
 
 char	*ft_relpath(void);
 int		check_redirections(t_list *new);

@@ -6,11 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 13:55:22 by user42            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/11/19 12:22:20 by user42           ###   ########.fr       */
-=======
-/*   Updated: 2021/11/19 11:13:19 by olozano-         ###   ########.fr       */
->>>>>>> 9b46dd9ae451d8fe76ef6174fc53ffdee64fce9a
+/*   Updated: 2021/11/19 12:43:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,66 +70,7 @@ void	ft_set_pipe(t_data *data, int i, t_list *cmd)
 		if (dup2(data->pipefd[i][1], STDOUT_FILENO) < 0)
 			ft_error(errno);
 	}
-<<<<<<< HEAD
 	ft_close_pipe(data);
-=======
-	ft_close_pipe(pipefd, cmd_nbr - 1);
-}
-
-static void	ft_free_pipe(int **pipefd, pid_t *pid, int nb)
-{
-	int	i;
-
-	i = -1;
-	free(pid);
-	while (++i < nb - 1)
-		free(pipefd[i]);
-	free(pipefd);
-}
-
-static void	ft_prep(int ***pipefd, pid_t **pid, int cmd_nbr)
-{
-	int	i;
-
-	i = -1;
-	*pipefd = (int **)malloc(sizeof(int *) * (cmd_nbr - 1));
-	while (++i < cmd_nbr - 1)
-		(*pipefd)[i] = (int *)malloc(sizeof(int) * 2);
-	*pid = (pid_t *)malloc(sizeof(pid_t) * cmd_nbr);
-	i = -1;
-	while (++i < cmd_nbr - 1)
-		pipe((*pipefd)[i]);
-}
-
-int ft_do_one(t_list *cmd, int **pipefd, char ***envp)
-{
-	pid_t pid;
-	int	i;
-
-	i = 0;
-	if (cmd->funct == NULL)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			ft_sig_manage(0);
-			ft_set_pipe(pipefd, 0, 1, cmd);
-			i = ft_exec(cmd, *envp);
-			if (i == -1)
-			{
-				ft_putstr_fd("minishell: ", 2, 0);
-				ft_putstr_fd(cmd->arg[0], 2, 0);
-				ft_putendl_fd(": command not found", 2);
-				exit(127);
-			}
-			exit(1);
-		}
-		waitpid(-1, &i, WUNTRACED);
-	}
-	else
-		i = cmd->funct(cmd->arg, envp, cmd->fd1);
-	return (i);
->>>>>>> 9b46dd9ae451d8fe76ef6174fc53ffdee64fce9a
 }
 
 int	ft_pipe(t_list *cmd, char ***envp)
@@ -147,22 +84,8 @@ int	ft_pipe(t_list *cmd, char ***envp)
 		data->ret = ft_do_one(cmd, data);
 	while (++i < data->cmd_nbr && data->cmd_nbr > 1)
 	{
-<<<<<<< HEAD
 		data->pid[i] = fork();
 		ft_do_child(data, cmd, i);
-=======
-		pid[i] = fork();
-		if (pid[i] == 0)
-		{
-			ft_sig_manage(0);
-			ft_set_pipe(pipefd, i, cmd_nbr, cmd);
-			if (cmd->funct == NULL)
-				ret = ft_exec(cmd, *envp);
-			else
-				ret = cmd->funct(cmd->arg, envp, cmd->fd1);
-			exit(ret);
-		}
->>>>>>> 9b46dd9ae451d8fe76ef6174fc53ffdee64fce9a
 		cmd = cmd->next;
 	}
 	i = -1;
