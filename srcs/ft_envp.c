@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 16:03:29 by user42            #+#    #+#             */
-/*   Updated: 2021/11/18 23:44:39 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:37:06 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ char	*put_env(char *str, int j, char **envp, int *moved)
 	char	*aux2;
 
 	end = j + 1;
-	while (str[end] && str[end] != ' ' && str[end] != '\"' && str[end] != '\'' 
-			&& str[end] != '\\' && str[end] != ';' && str[end] != '.'
-			&& str[end] != '=' && str[end] != '.' && str[end] != '$'
-			&& str[end] != '/')
+	while (str[end] && str[end] != ' ' && str[end] != '\"' && str[end] != '\''
+		&& str[end] != '\\' && str[end] != ';' && str[end] != '.'
+		&& str[end] != '=' && str[end] != '.' && str[end] != '$'
+		&& str[end] != '/')
 		end++;
-	if (str[j + 1] >='0' && str[j + 1] <='9')
+	if (str[j + 1] >= '0' && str[j + 1] <= '9')
 		end = j + 2;
 	if (str[end])
 		aux1 = ft_strdup(str + end);
@@ -61,13 +61,13 @@ void	ft_getenv_var(char **separate, char **envp, int s_quote, int d_quote)
 	int		j;
 	int		aux;
 
-	i = 0;
-	while (separate[i])
+	i = -1;
+	while (separate[++i])
 	{
-		j = 0;
+		j = -1;
 		s_quote = 0;
 		d_quote = 0;
-		while (separate[i][j])
+		while (separate[i][++j])
 		{
 			if (!d_quote)
 				s_quote = (s_quote + (separate[i][j] == '\'')) % 2;
@@ -78,18 +78,15 @@ void	ft_getenv_var(char **separate, char **envp, int s_quote, int d_quote)
 				separate[i] = put_env(separate[i], j, envp, &aux);
 				if (!separate[i][0])
 					separate[i][0] = 127;
-				j += aux - 1;
+				j += aux - 2;
 			}
-			else
-				j++;
 		}
-		i++;
 	}
 }
 
 void	ft_last_cmd(int wstatus, char **envp)
 {
-	int 	i;
+	int		i;
 	char	*tmp;
 
 	i = 0;
@@ -106,12 +103,11 @@ void	ft_last_cmd(int wstatus, char **envp)
 		i++;
 	free(envp[i]);
 	envp[i] = ft_strjoin(ft_strdup("?="), tmp);
-
 }
 
 char	**ft_envpdup(char **envp)
 {
-	int i;
+	int		i;
 	char	**cp;
 
 	i = 0;
