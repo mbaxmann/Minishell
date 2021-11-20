@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 15:21:19 by oscarlo           #+#    #+#             */
-/*   Updated: 2021/11/19 23:35:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/20 01:11:35 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 {
 	char	**separate;
 	t_list	*index;
+	int		redir;
 
 	separate = ft_special_split(cmd, ' ');
 	if (!separate[0])
@@ -29,9 +30,11 @@ int	make_cmd(char *cmd, t_list **all_cmds, char **envp)
 	index = ft_builtins(separate, all_cmds);
 	if (!index)
 		index = ft_lst_push(all_cmds, NULL, separate);
-	if (check_redirections(index) == -42)
+	redir = check_redirections(index);
+	if (redir == -1)
 		return (1);
-	ft_add_heredoc(all_cmds);
+	if (index->fd2 == -42)
+		ft_lst_front(all_cmds, &ft_echo, heredoc(index->aux, envp));
 	return (0);
 }
 

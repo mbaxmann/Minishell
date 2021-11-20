@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 23:09:35 by user42            #+#    #+#             */
-/*   Updated: 2021/11/20 00:13:54 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/20 01:29:30 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,24 @@ void	ft_add_heredoc(t_list **index)
 	tmp1 = *index;
 }
 
-void	heredoc(char *delimiter, int *pipefd)
+char	**heredoc(char *delimiter, char **envp)
 {
 	char	*str;
 	char	*aux;
-	//int		tmp_fd;
+	char	**separate;
 
-	str = (char *)malloc(sizeof(char));
-	str = NULL;
+	str = ft_strdup("echo ");
 	aux = NULL;
 	while (!aux || ft_strncmp(delimiter, aux, ft_strlen(delimiter)))
 	{
 		str = ft_strjoin(str, aux);
-		str = ft_strjoin(str, ft_strdup("\n"));
+		str = ft_strjoin(str, ft_strdup("\n\1"));
 		aux = readline(">");
 	}
 	free(aux);
-	//aux = ttyname(STDIN_FILENO);
-	//tmp_fd = open(aux, O_WRONLY);
-	write(pipefd[1], str, ft_strlen(str));
-	close(pipefd[1]);
+	separate = ft_split(str, '\1');
 	free(str);
+	ft_getenv_var(separate, envp, 0, 0);
+	free(delimiter);
+	return (separate);
 }

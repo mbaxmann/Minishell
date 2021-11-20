@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 10:25:46 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/19 23:48:28 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/20 00:21:37 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,24 @@ t_list	*ft_lst_push(t_list **first, int (*funct)(char **av, char ***envp,
 	return (new);
 }
 
+t_list	*ft_lst_front(t_list **first, int (*funct)(char **av, char ***envp,
+		int fd1), char **separate)
+{
+	t_list	*new;
+	t_list	*first_cp;
+
+	new = ft_lst_create(funct, separate);
+	if (*first == NULL)
+		*first = new;
+	else
+	{
+		first_cp = *first;
+		*first = new;
+		new->next = first_cp;
+	}
+	return (new);
+}
+
 void	ft_lst_free(t_list *first)
 {
 	t_list	*tmp;
@@ -55,13 +73,10 @@ void	ft_lst_free(t_list *first)
 		tmp = first;
 		first = first->next;
 		i = 0;
-		if (tmp->arg)
+		while (tmp->arg[i])
 		{
-			while (tmp->arg[i])
-			{
-				free(tmp->arg[i]);
-				i++;
-			}
+			free(tmp->arg[i]);
+			i++;
 		}
 		if (tmp->arg)
 			free(tmp->arg);

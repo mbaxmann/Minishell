@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 10:03:57 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/19 12:40:31 by user42           ###   ########.fr       */
+/*   Updated: 2021/11/20 00:22:29 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,7 @@ void	ft_lst_free(t_list *first);
 int		ft_lst_len(t_list *first);
 t_list	*ft_lst_push(t_list **first, int (*funct)
 			(char **av, char ***envp, int fd1), char **separate);
+t_list	*ft_lst_front(t_list **first, int (*funct)
+			(char **av, char ***envp, int fd1), char **separate);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbaxmann <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:53:32 by mbaxmann          #+#    #+#             */
-/*   Updated: 2021/09/13 17:47:06 by mbaxmann         ###   ########.fr       */
+/*   Updated: 2021/11/20 01:27:37 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	ft_count_words(char const *str, char c)
 	count = 0;
 	while (str[i])
 	{
-		while ((str[i] == c || str[i] == '\n') && str[i])
+		while ((str[i] == c) && str[i])
 			i++;
 		if (str[i])
 			count++;
-		while ((str[i] != c && str[i] != '\n') && str[i])
+		while ((str[i] != c) && str[i])
 			i++;
 	}
 	return (count);
@@ -36,9 +36,9 @@ int	ft_get_len(char const *str, int *i, char c)
 	int	len;
 
 	len = 0;
-	while ((str[*i] == c || str[*i] == '\n') && str[*i])
+	while ((str[*i] == c) && str[*i])
 		(*i)++;
-	while ((str[*i] != c && str[*i] != '\n') && str[*i])
+	while ((str[*i] != c) && str[*i])
 	{
 		(*i)++;
 		len++;
@@ -63,9 +63,9 @@ int	ft_fill(char **result, char const *str, int word_number, char c)
 		result[j] = (char *)malloc(sizeof(char) * (len + 1));
 		while (k < len)
 		{
-			while ((str[i] == c || str[i] == '\n') && str[i])
+			while ((str[i] == c) && str[i])
 				i++;
-			while ((str[i] != c && str[i] != '\n') && str[i])
+			while ((str[i] != c) && str[i])
 				result[j][k++] = str[i++];
 			result[j][k] = '\0';
 		}
