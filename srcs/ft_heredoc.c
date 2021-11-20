@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 23:09:35 by user42            #+#    #+#             */
-/*   Updated: 2021/11/20 01:29:30 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/20 14:11:04 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,15 @@ char	**heredoc(char *delimiter, char **envp)
 
 	str = ft_strdup("echo ");
 	aux = NULL;
-	while (!aux || ft_strncmp(delimiter, aux, ft_strlen(delimiter)))
+	while (!aux || ft_strncmp(delimiter, aux, ft_strlen(delimiter) + 1))
 	{
 		str = ft_strjoin(str, aux);
 		str = ft_strjoin(str, ft_strdup("\n\1"));
 		aux = readline(">");
 	}
 	free(aux);
+	str[ft_strlen(str) - 1] = 0;
+	str[ft_strlen(str) - 1] = 0;
 	separate = ft_split(str, '\1');
 	free(str);
 	ft_getenv_var(separate, envp, 0, 0);

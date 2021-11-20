@@ -6,7 +6,7 @@
 /*   By: olozano- <olozano-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:56:17 by olozano-          #+#    #+#             */
-/*   Updated: 2021/11/20 01:33:58 by olozano-         ###   ########.fr       */
+/*   Updated: 2021/11/20 14:12:47 by olozano-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ int	take_redirection(t_list *new, char *arg)
 		else
 			new->fd2 = open(arg + 1, O_RDWR, 0600);
 	}
-	if ((arg[0] == '<' && new->fd2 == -1) || (arg[1] == '>' && new->fd1 == -1))
+	if ((arg[0] == '<' && new->fd2 == -1) || (arg[0] == '>' && new->fd1 == -1))
 			ret = ft_error(errno);
-	free(arg);
+	if (ret)
+		free(arg);
 	return (ret);
 }
 
@@ -72,7 +73,7 @@ int	check_redirections(t_list *new)
 				new->arg = erase_from_array(new->arg, i + 1);
 			}
 			else
-				if (!take_redirection(new, new->arg[i]))
+				if (take_redirection(new, new->arg[i]))
 					return (-1);
 			new->arg = erase_from_array(new->arg, i);
 			i--;
